@@ -126,10 +126,9 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
         WorldServer ws = ((CraftWorld) block.getWorld()).getHandle();
         BlockPosition bp = new BlockPosition(block.getX(), block.getY(), block.getZ());
         TileEntity tile = ws.getTileEntity(bp);
-        if (!(tile instanceof TileEntityFurnace)) {
+        if (!(tile instanceof TileEntityFurnace furnace)) {
             return;
         }
-        TileEntityFurnace furnace = (TileEntityFurnace) tile;
         furnace.setCustomName(new ChatMessage(name));
     }
 
@@ -138,10 +137,9 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
         WorldServer ws = ((CraftWorld) block.getWorld()).getHandle();
         BlockPosition bp = new BlockPosition(block.getX(), block.getY(), block.getZ());
         TileEntity tile = ws.getTileEntity(bp);
-        if (!(tile instanceof TileEntityFurnace)) {
+        if (!(tile instanceof TileEntityFurnace furnace)) {
             return false;
         }
-        TileEntityFurnace furnace = (TileEntityFurnace) tile;
         boolean is = false;
         if (furnace.getCustomName() != null) {
             is = furnace.getCustomName().getString().equals("TARDIS Artron Furnace");

@@ -141,7 +141,6 @@ public class TARDISDisguise {
             }
             case GLOW_SQUID -> {
                 str = "GlowSquid";
-//                packagePath = "";
                 hasEntityStr = false;
             }
             default -> {

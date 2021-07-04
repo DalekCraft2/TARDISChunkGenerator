@@ -34,7 +34,7 @@ public class SignInputHandler {
                 channel.pipeline().addAfter("decoder", "update_sign", new MessageToMessageDecoder<Packet>() {
 
                     @Override
-                    protected void decode(ChannelHandlerContext chc, Packet packet, List<Object> out) throws Exception {
+                    protected void decode(ChannelHandlerContext chc, Packet packet, List<Object> out) {
                         if (packet instanceof PacketPlayInUpdateSign) {
 
                             PacketPlayInUpdateSign usePacket = (PacketPlayInUpdateSign) packet;

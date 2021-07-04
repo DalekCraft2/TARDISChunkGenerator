@@ -126,7 +126,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
         WorldServer ws = ((CraftWorld) block.getWorld()).getHandle();
         BlockPosition bp = new BlockPosition(block.getX(), block.getY(), block.getZ());
         TileEntity tile = ws.getTileEntity(bp);
-        if (tile == null || !(tile instanceof TileEntityFurnace)) {
+        if (!(tile instanceof TileEntityFurnace)) {
             return;
         }
         TileEntityFurnace furnace = (TileEntityFurnace) tile;
@@ -138,7 +138,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
         WorldServer ws = ((CraftWorld) block.getWorld()).getHandle();
         BlockPosition bp = new BlockPosition(block.getX(), block.getY(), block.getZ());
         TileEntity tile = ws.getTileEntity(bp);
-        if (tile == null || !(tile instanceof TileEntityFurnace)) {
+        if (!(tile instanceof TileEntityFurnace)) {
             return false;
         }
         TileEntityFurnace furnace = (TileEntityFurnace) tile;

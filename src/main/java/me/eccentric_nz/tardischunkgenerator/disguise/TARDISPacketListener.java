@@ -59,9 +59,7 @@ public class TARDISPacketListener {
                             Entity entity = Bukkit.getEntity(uuid);
                             if (entity.getType().equals(EntityType.PLAYER)) {
                                 Player player = (Player) entity;
-                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISHelper.getTardisHelper(), () -> {
-                                    TARDISDisguiser.redisguise(player, entity.getWorld());
-                                }, 5L);
+                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISHelper.getTardisHelper(), () -> TARDISDisguiser.redisguise(player, entity.getWorld()), 5L);
                             }
                             f.setAccessible(false);
                         }

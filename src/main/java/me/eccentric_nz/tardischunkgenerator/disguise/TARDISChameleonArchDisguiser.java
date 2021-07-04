@@ -88,7 +88,7 @@ public class TARDISChameleonArchDisguiser {
         }
         TARDISDisguiseTracker.ProfileData map = TARDISDisguiseTracker.ARCHED.get(player.getUniqueId());
         if (map == null) {
-            Bukkit.getLogger().log(Level.INFO, TARDISHelper.messagePrefix + "Could not get backed up profile data from tracker!");
+            Bukkit.getLogger().log(Level.INFO, TARDISHelper.MESSAGE_PREFIX + "Could not get backed up profile data from tracker!");
             return;
         }
         PropertyMap properties = map.getProperties();

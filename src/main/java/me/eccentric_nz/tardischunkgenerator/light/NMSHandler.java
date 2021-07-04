@@ -248,7 +248,7 @@ public class NMSHandler extends NmsHandlerBase {
                     if (timeToWait == -1) {
                         // Try to wait 3 seconds until light engine mailbox is busy.
                         timeToWait = System.currentTimeMillis() + 3 * 1000;
-                        Bukkit.getLogger().log(Level.INFO, TARDISHelper.messagePrefix + "ThreadedMailbox is closing. Will wait...");
+                        Bukkit.getLogger().log(Level.INFO, TARDISHelper.MESSAGE_PREFIX + "ThreadedMailbox is closing. Will wait...");
                     } else if (System.currentTimeMillis() >= timeToWait) {
                         throw new RuntimeException("Failed to enter critical section while ThreadedMailbox is closing");
                     }

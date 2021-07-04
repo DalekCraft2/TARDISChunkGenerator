@@ -20,7 +20,7 @@ import java.io.*;
  */
 public class TextUtils {
 
-    private static final Logger logger = (Logger) LogManager.getRootLogger();
+    private static final Logger LOGGER = (Logger) LogManager.getRootLogger();
     private static final String STANDARD_STACKTRACE_PREFIX = "at ";
     private static final String SKIPPING_LINES_STRING = "\t...";
     private static final String CAUSE_STACKTRACE_PREFIX = "Caused by:";
@@ -185,7 +185,7 @@ public class TextUtils {
         if (relPack == null || "".equals(relPack)) {
             if (cutTBS) {
                 cutTBS = false;
-                logger.warn("Relevant package was not set for the method. Stacktrace can not be shortened. Returning full stacktrace");
+                LOGGER.warn("Relevant package was not set for the method. Stacktrace can not be shortened. Returning full stacktrace");
             }
         }
         if (cutTBS) {
@@ -332,9 +332,9 @@ public class TextUtils {
 
     private static void error(Throwable t) {
         if (RELEVANT_PACKAGE != null && !RELEVANT_PACKAGE.isEmpty()) {
-            logger.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace" + getStacktrace(t));
+            LOGGER.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace" + getStacktrace(t));
         } else {
-            logger.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace", t);
+            LOGGER.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace", t);
         }
     }
 }

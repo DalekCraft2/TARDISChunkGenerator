@@ -316,7 +316,7 @@ public class TARDISDisguise {
             }
             return entity;
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            Bukkit.getLogger().log(Level.SEVERE, TARDISHelper.messagePrefix + "~TARDISDisguise~ " + e.getMessage());
+            Bukkit.getLogger().log(Level.SEVERE, TARDISHelper.MESSAGE_PREFIX + "~TARDISDisguise~ " + e.getMessage());
             e.printStackTrace();
         }
         return null;

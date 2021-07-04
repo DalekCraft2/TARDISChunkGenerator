@@ -80,8 +80,8 @@ import java.util.logging.Level;
 
 public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
 
-    public static final String messagePrefix = ChatColor.AQUA + "[TARDISChunkGenerator] " + ChatColor.RESET;
-    public static final RequestSteamMachine machine = new RequestSteamMachine();
+    public static final String MESSAGE_PREFIX = ChatColor.AQUA + "[TARDISChunkGenerator] " + ChatColor.RESET;
+    public static final RequestSteamMachine MACHINE = new RequestSteamMachine();
     public static TARDISHelper tardisHelper;
 
     public static TARDISHelper getTardisHelper() {
@@ -90,8 +90,8 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
 
     @Override
     public void onDisable() {
-        if (machine.isStarted()) {
-            machine.shutdown();
+        if (MACHINE.isStarted()) {
+            MACHINE.shutdown();
         }
     }
 
@@ -101,18 +101,18 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
         // register disguise listener
         getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(this), this);
         // start RequestStreamMachine
-        machine.start(2, 400);
+        MACHINE.start(2, 400);
         String basePath = getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
         // Add custom biomes
-        BiomeUtilities.addBiomes(basePath, messagePrefix);
+        BiomeUtilities.addBiomes(basePath, MESSAGE_PREFIX);
         // get the TARDIS config
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(new File(basePath + "config.yml"));
         // should we filter the log?
         if (configuration.getBoolean("debug")) {
             // yes we should!
             filterLog(basePath + "filtered.log");
-            getServer().getConsoleSender().sendMessage(messagePrefix + "Starting filtered logging for TARDIS plugins...");
-            getServer().getConsoleSender().sendMessage(messagePrefix + "Log file located at 'plugins/TARDIS/filtered.log'");
+            getServer().getConsoleSender().sendMessage(MESSAGE_PREFIX + "Starting filtered logging for TARDIS plugins...");
+            getServer().getConsoleSender().sendMessage(MESSAGE_PREFIX + "Log file located at 'plugins/TARDIS/filtered.log'");
         }
     }
 
@@ -193,7 +193,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
                 NBTCompressedStreamTools.a(tagCompound, fileoutputstream);
                 fileoutputstream.close();
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MESSAGE_PREFIX + ex.getMessage());
             }
         }
     }
@@ -213,14 +213,14 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
                 FileOutputStream fileoutputstream = new FileOutputStream(file);
                 NBTCompressedStreamTools.a(tagCompound, fileoutputstream);
                 fileoutputstream.close();
-                Bukkit.getLogger().log(Level.INFO, messagePrefix + "Renamed level to " + newName);
+                Bukkit.getLogger().log(Level.INFO, MESSAGE_PREFIX + "Renamed level to " + newName);
                 // rename the directory
                 File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
                 File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
                 directory.renameTo(folder);
-                Bukkit.getLogger().log(Level.INFO, messagePrefix + "Renamed directory to " + newName);
+                Bukkit.getLogger().log(Level.INFO, MESSAGE_PREFIX + "Renamed directory to " + newName);
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MESSAGE_PREFIX + ex.getMessage());
             }
         }
     }
@@ -247,7 +247,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
                 NBTCompressedStreamTools.a(tagCompound, fileoutputstream);
                 fileoutputstream.close();
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MESSAGE_PREFIX + ex.getMessage());
             }
         }
     }
@@ -290,11 +290,11 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
                 }
                 return new TARDISPlanetData(gameMode, environment, worldType);
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MESSAGE_PREFIX + ex.getMessage());
                 return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
             }
         }
-        Bukkit.getLogger().log(Level.INFO, messagePrefix + "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
+        Bukkit.getLogger().log(Level.INFO, MESSAGE_PREFIX + "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
         return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
     }
 

@@ -31,7 +31,7 @@ import org.bukkit.event.HandlerList;
 
 public class DeleteLightEvent extends Event implements Cancellable {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancel;
     private World world;
     private int x;
@@ -55,12 +55,12 @@ public class DeleteLightEvent extends Event implements Cancellable {
     }
 
     public static HandlerList getHandlerList() {
-        return handlers;
+        return HANDLERS;
     }
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return HANDLERS;
     }
 
     @Override

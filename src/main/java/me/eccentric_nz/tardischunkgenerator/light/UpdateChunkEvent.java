@@ -30,7 +30,7 @@ import org.bukkit.event.HandlerList;
 
 public class UpdateChunkEvent extends Event implements Cancellable {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancel;
     private ChunkInfo cCoord;
     private LightType lightType;
@@ -45,12 +45,12 @@ public class UpdateChunkEvent extends Event implements Cancellable {
     }
 
     public static HandlerList getHandlerList() {
-        return handlers;
+        return HANDLERS;
     }
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return HANDLERS;
     }
 
     @Override

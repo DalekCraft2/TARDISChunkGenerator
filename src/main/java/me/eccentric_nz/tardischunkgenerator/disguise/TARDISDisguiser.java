@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
 
 public class TARDISDisguiser {
 
-    private static final boolean nameVisible = false;
+    private static final boolean NAME_VISIBLE = false;
     private final Player player;
     private Object[] options;
     private EntityType entityType;
@@ -68,7 +68,7 @@ public class TARDISDisguiser {
                     Entity mob = TARDISDisguise.createMobDisguise(disguise, world);
                     if (mob != null) {
                         // set location
-                        setEntityLocationIdAndName(mob, p.getLocation(), p, nameVisible);
+                        setEntityLocationIdAndName(mob, p.getLocation(), p, NAME_VISIBLE);
                         PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(p.getEntityId());
                         PacketPlayOutSpawnEntityLiving packetPlayOutSpawnEntityLiving = new PacketPlayOutSpawnEntityLiving((EntityLiving) mob);
                         PacketPlayOutEntityMetadata packetPlayOutEntityMetadata = new PacketPlayOutEntityMetadata(mob.getId(), mob.getDataWatcher(), false);
@@ -87,7 +87,7 @@ public class TARDISDisguiser {
         Entity mob = TARDISDisguise.createMobDisguise(disguise, world);
         if (mob != null) {
             // set location
-            setEntityLocationIdAndName(mob, player.getLocation(), player, nameVisible);
+            setEntityLocationIdAndName(mob, player.getLocation(), player, NAME_VISIBLE);
             TARDISDisguiseTracker.DISGUISED_AS_MOB.put(player.getUniqueId(), new TARDISDisguise(disguise.getEntityType(), disguise.getOptions()));
             PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(player.getEntityId());
             PacketPlayOutSpawnEntityLiving packetPlayOutSpawnEntityLiving = new PacketPlayOutSpawnEntityLiving((EntityLiving) mob);
@@ -126,7 +126,7 @@ public class TARDISDisguiser {
             TARDISDisguise disguise = new TARDISDisguise(entityType, options);
             entity = TARDISDisguise.createMobDisguise(disguise, location.getWorld());
             if (entity != null) {
-                setEntityLocationIdAndName(entity, location, player, nameVisible);
+                setEntityLocationIdAndName(entity, location, player, NAME_VISIBLE);
             }
         }
     }

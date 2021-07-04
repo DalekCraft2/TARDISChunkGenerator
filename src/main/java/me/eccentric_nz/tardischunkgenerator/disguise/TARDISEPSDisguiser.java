@@ -53,7 +53,7 @@ public class TARDISEPSDisguiser {
         WorldServer nmsWorld = ((CraftWorld) world).getHandle();
         for (Map.Entry<Integer, UUID> map : TARDISDisguiseTracker.DISGUISED_NPCS.entrySet()) {
             Entity stand = nmsWorld.getEntity(map.getKey());
-            if (stand != null && stand.getWorld() == world) {
+            if (stand != null && stand.getWorld().getWorld() == world) {
                 EntityPlayer entityPlayer = ((CraftPlayer) Bukkit.getOfflinePlayer(map.getValue())).getHandle();
                 EntityPlayer npc = new EntityPlayer(server, nmsWorld, entityPlayer.getProfile());
                 // set location

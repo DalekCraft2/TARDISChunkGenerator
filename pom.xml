@@ -1,5 +1,6 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
@@ -14,7 +15,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
-        <java.version>16</java.version>
+        <spigot.version>1.17.1</spigot.version>
+        <spigot.javadocs>https://hub.spigotmc.org/javadocs/spigot/</spigot.javadocs>
     </properties>
     <licenses>
         <license>
@@ -109,47 +111,59 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <links> <!-- References to external Javadocs -->
+                        <!-- Spigot-API -->
+                        <link>${spigot.javadocs}</link>
+                        <!-- Jetbrains Java Annotations -->
+                        <link>https://javadoc.io/doc/org.jetbrains/annotations/latest/</link>
+                    </links>
+                </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
+        <!-- Hard Dependencies -->
         <dependency>
-            <!-- JetBrains Java Annotations -->
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>21.0.1</version>
-            <type>jar</type>
-            <scope>compile</scope>
-            <optional>true</optional>
+            <!-- Spigot-API -->
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>${spigot.version}-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <!-- Spigot-Server -->
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.17-R0.1-SNAPSHOT</version>
-            <type>jar</type>
+            <version>${spigot.version}-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-            <optional>true</optional>
         </dependency>
+
+        <!-- Shaded Dependencies -->
+        <dependency>
+            <!-- JetBrains Java Annotations -->
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>21.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Soft Dependencies -->
         <dependency>
             <!-- MassiveCore3 -->
             <groupId>com.massivecraft.massivecore</groupId>
             <artifactId>MassiveCore</artifactId>
             <version>3.3.3</version>
-            <type>jar</type>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/MassiveCore.jar</systemPath>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <!-- Factions3 -->
             <groupId>com.massivecraft.factions</groupId>
             <artifactId>Factions</artifactId>
             <version>3.3.3</version>
-            <type>jar</type>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

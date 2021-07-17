@@ -43,11 +43,6 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-        <repository>
-            <name>TARDIS</name>
-            <id>tardis-repo</id>
-            <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
-        </repository>
     </repositories>
     <build>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
-import com.massivecraft.factions.entity.BoardColl;
-import com.massivecraft.factions.entity.Faction;
-import com.massivecraft.factions.entity.MPlayer;
-import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.factions.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -36,16 +33,17 @@ public class TARDISFactions {
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
      * player doesn't belong to.
      *
-     * @param player   a player
-     * @param location the location instance to check.
+     * @param p a player
+     * @param l the location instance to check.
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
-    public boolean isInFaction(Player player, Location location) {
+    public boolean isInFaction(Player p, Location l) {
         boolean bool = true;
-        MPlayer uplayer = MPlayer.get(player);
-        Faction ufac = uplayer.getFaction();
-        Faction lfac = BoardColl.get().getFactionAt(PS.valueOf(location));
-        if (!ufac.equals(lfac) && !lfac.isNone()) {
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(p);
+        Faction fPlayerFaction = fPlayer.getFaction();
+        FLocation fLocation = new FLocation(l);
+        Faction factionAtLocation = Board.getInstance().getFactionAt(fLocation);
+        if (!fPlayerFaction.equals(factionAtLocation) && !factionAtLocation.isWilderness()) {
             bool = false;
         }
         return bool;

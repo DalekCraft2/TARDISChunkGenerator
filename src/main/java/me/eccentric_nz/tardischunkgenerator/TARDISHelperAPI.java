@@ -36,6 +36,13 @@ import java.util.UUID;
 public interface TARDISHelperAPI {
 
     /**
+     * Gets the formatted TARDIS plugin name for messaging
+     *
+     * @return the formatted TARDIS plugin name
+     */
+    String getMessagePrefix();
+
+    /**
      * Names a furnace GUI
      *
      * @param block the furnace block

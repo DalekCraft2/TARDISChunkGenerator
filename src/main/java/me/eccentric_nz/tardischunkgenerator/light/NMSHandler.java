@@ -36,7 +36,6 @@ import net.minecraft.util.thread.ThreadedMailbox;
 import net.minecraft.world.level.EnumSkyBlock;
 import net.minecraft.world.level.chunk.Chunk;
 import net.minecraft.world.level.lighting.*;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
@@ -248,7 +247,7 @@ public class NMSHandler extends NmsHandlerBase {
                     if (timeToWait == -1) {
                         // Try to wait 3 seconds until light engine mailbox is busy.
                         timeToWait = System.currentTimeMillis() + 3 * 1000;
-                        Bukkit.getLogger().log(Level.INFO, TARDISHelper.MESSAGE_PREFIX + "ThreadedMailbox is closing. Will wait...");
+                        TARDISHelper.plugin.getLogger().log(Level.INFO, "ThreadedMailbox is closing. Will wait...");
                     } else if (System.currentTimeMillis() >= timeToWait) {
                         throw new RuntimeException("Failed to enter critical section while ThreadedMailbox is closing");
                     }

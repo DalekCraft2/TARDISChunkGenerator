@@ -49,8 +49,8 @@ public class TARDISPlayerDisguiser {
     }
 
     public static void disguiseToPlayer(Player disguised, Player to) {
-        to.hidePlayer(TARDISHelper.tardisHelper, disguised);
-        to.showPlayer(TARDISHelper.tardisHelper, disguised);
+        to.hidePlayer(TARDISHelper.plugin, disguised);
+        to.showPlayer(TARDISHelper.plugin, disguised);
     }
 
     public void disguisePlayer() {
@@ -77,7 +77,7 @@ public class TARDISPlayerDisguiser {
                 profile.getProperties().removeAll("textures");
                 return profile.getProperties().put("textures", new Property("textures", skin, signature));
             } else {
-                Bukkit.getLogger().log(Level.INFO, TARDISHelper.MESSAGE_PREFIX + "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
+                TARDISHelper.plugin.getLogger().log(Level.INFO, "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
                 return false;
             }
         } catch (IOException e) {

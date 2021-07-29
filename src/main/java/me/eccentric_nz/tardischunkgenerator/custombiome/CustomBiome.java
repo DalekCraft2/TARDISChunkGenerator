@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
 import com.mojang.serialization.Lifecycle;
+import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryWritable;
 import net.minecraft.resources.MinecraftKey;
@@ -54,8 +55,7 @@ public class CustomBiome {
             newBiome.a(newFog.a());
             dedicatedServer.getCustomRegistry().b(IRegistry.aO).a(customKey, newBiome.a(), Lifecycle.stable());
         } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Exception adding custom biome to registry: %s", e.getMessage());
+            TARDISHelper.plugin.getLogger().log(Level.WARNING, "Exception adding custom biome to registry: %s", e.getMessage());
         }
     }
 }
-

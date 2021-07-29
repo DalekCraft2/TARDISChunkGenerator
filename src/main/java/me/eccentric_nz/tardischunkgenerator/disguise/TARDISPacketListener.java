@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class TARDISPacketListener {
 
@@ -58,12 +59,12 @@ public class TARDISPacketListener {
                             Entity entity = Bukkit.getEntity(uuid);
                             if (entity.getType().equals(EntityType.PLAYER)) {
                                 Player player = (Player) entity;
-                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISHelper.getTardisHelper(), () -> TARDISDisguiser.redisguise(player, entity.getWorld()), 5L);
+                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISHelper.plugin, () -> TARDISDisguiser.redisguise(player, entity.getWorld()), 5L);
                             }
                             f.setAccessible(false);
                         }
                     } catch (NoSuchFieldException | IllegalAccessException e) {
-                        Bukkit.getServer().getConsoleSender().sendMessage(TARDISHelper.MESSAGE_PREFIX + ChatColor.RED + " Could not get UUID from PacketPlayOutNamedEntitySpawn " + ChatColor.RESET + e.getMessage());
+                        TARDISHelper.plugin.getLogger().log(Level.SEVERE, "Could not get UUID from PacketPlayOutNamedEntitySpawn: " + e.getMessage());
                     }
                 }
                 super.write(channelHandlerContext, packet, channelPromise);

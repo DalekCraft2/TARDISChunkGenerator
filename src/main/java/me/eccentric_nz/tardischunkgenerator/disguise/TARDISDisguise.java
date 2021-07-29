@@ -32,7 +32,6 @@ import net.minecraft.world.item.EnumColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.IBlockData;
-import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
@@ -316,7 +315,7 @@ public class TARDISDisguise {
             }
             return entity;
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            Bukkit.getLogger().log(Level.SEVERE, TARDISHelper.MESSAGE_PREFIX + "~TARDISDisguise~ " + e.getMessage());
+            TARDISHelper.plugin.getLogger().log(Level.SEVERE, "~TARDISDisguise~ " + e.getMessage());
             e.printStackTrace();
         }
         return null;

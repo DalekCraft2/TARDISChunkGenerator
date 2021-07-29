@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
+import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.commands.CommandListenerWrapper;
 import net.minecraft.core.BlockPosition;
 import net.minecraft.core.IRegistry;
@@ -51,13 +52,13 @@ public class BiomeUtilities {
         String levelName = getLevelName();
         FileConfiguration planets = YamlConfiguration.loadConfiguration(new File(basePath + "planets.yml"));
         if (planets.getBoolean("planets." + levelName + "_tardis_gallifrey.enabled")) {
-            Bukkit.getConsoleSender().sendMessage(messagePrefix + "Adding custom biomes for planet Gallifrey...");
+            TARDISHelper.plugin.getLogger().log(Level.INFO, "Adding custom biomes for planet Gallifrey...");
             CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
             CustomBiome.addCustomBiome(TARDISBiomeData.ERODED);
             CustomBiome.addCustomBiome(TARDISBiomeData.PLATEAU);
         }
         if (planets.getBoolean("planets." + levelName + "_tardis_skaro.enabled")) {
-            Bukkit.getConsoleSender().sendMessage(messagePrefix + "Adding custom biomes for planet Skaro...");
+            TARDISHelper.plugin.getLogger().log(Level.INFO, "Adding custom biomes for planet Skaro...");
             CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             CustomBiome.addCustomBiome(TARDISBiomeData.HILLS);
             CustomBiome.addCustomBiome(TARDISBiomeData.LAKES);
@@ -108,7 +109,7 @@ public class BiomeUtilities {
             if (key != null) {
                 return key.toString();
             } else {
-                System.out.println("Biome key was null for " + location);
+                TARDISHelper.plugin.getLogger().log(Level.INFO, "Biome key was null for " + location);
                 switch (world.getEnvironment()) {
                     case NETHER -> {
                         return "minecraft:nether_wastes";
@@ -150,7 +151,7 @@ public class BiomeUtilities {
             } else if (fog.d() == TARDISBiomeData.PLATEAU.getSkyColour()) {
                 return "tardis:gallifrey_plateau";
             } else {
-                Bukkit.getLogger().log(Level.INFO, "Biome key was not found for chunk skyColour");
+                TARDISHelper.plugin.getLogger().log(Level.INFO, "Biome key was not found for chunk skyColour");
                 DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
                 IRegistry<BiomeBase> registry = dedicatedServer.getCustomRegistry().d(IRegistry.aO);
                 return registry.getKey(base).toString();

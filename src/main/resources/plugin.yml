@@ -1,4 +1,4 @@
-authors: [ eccentric_nz ]
+authors: [eccentric_nz]
 main: me.eccentric_nz.tardischunkgenerator.TARDISHelper
 name: TARDISChunkGenerator
 description: Chunk generator for the TARDIS plugin

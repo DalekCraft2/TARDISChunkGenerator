@@ -65,6 +65,7 @@
             <artifactId>annotations</artifactId>
             <version>21.0.1</version>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
 
         <!-- Soft dependencies -->
@@ -124,7 +125,7 @@
                 <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>*</include>
+                    <include>**/*</include>
                 </includes>
             </resource>
         </resources>

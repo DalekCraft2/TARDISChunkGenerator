@@ -22,7 +22,7 @@ public class PlayerInputEvent extends PlayerEvent {
 
     public PlayerInputEvent(PacketPlayInUpdateSign packet, Player p) {
         super(p);
-        // This is were your code goes
+        // This is where your code goes
         updateSign(p, packet);
     }
 

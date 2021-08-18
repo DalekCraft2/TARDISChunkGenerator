@@ -44,9 +44,9 @@ public class CustomBiome {
             newBiome.d(data.getDownfall()); // downfall of biome
             newBiome.a(data.isFrozen() ? BiomeBase.TemperatureModifier.b : BiomeBase.TemperatureModifier.a); // BiomeBase.TemperatureModifier.a will make your biome normal, BiomeBase.TemperatureModifier.b will make your biome frozen
             BiomeFog.a newFog = new BiomeFog.a();
-            newFog.a(BiomeFog.GrassColor.a); // this doesn't affect the actual final grass color, just leave this line as it is or you will get errors
+            newFog.a(BiomeFog.GrassColor.a); // this doesn't affect the actual final grass color, just leave this line as it is, or you will get errors
             // necessary values; removing them will break your biome
-            newFog.a(data.getFogColour()); // fogcolour
+            newFog.a(data.getFogColour()); // fog colour
             newFog.b(data.getWaterColour()); // water colour
             newFog.c(data.getWaterFogColour()); // water fog colour
             newFog.d(data.getSkyColour()); // sky colour

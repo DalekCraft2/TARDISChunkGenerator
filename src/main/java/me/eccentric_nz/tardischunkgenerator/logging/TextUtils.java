@@ -11,8 +11,8 @@ import java.io.*;
  * Shortened version of the stacktrace will contain concise information focusing on specific package or subpackage while
  * removing long parts of irrelevant stacktrace. This could be very useful for logging in web-based architecture where
  * stacktrace may contain long parts of server provided classes trace that could be eliminated with the methods of this
- * class while retaining important parts of the stacktrace relating to user's packages. Also the same utility (starting
- * from version 1.5.0.3) allows to filter and shorten stacktrace as a string the same way as the stacktrace extracted
+ * class while retaining important parts of the stacktrace relating to user's packages. Also, the same utility (starting
+ * from version 1.5.0.3) allows filtering and shortening stacktrace as a string the same way as the stacktrace extracted
  * from exception. So, essentially stack traces could be filtered "on the fly" at run time or later on from any text
  * source such as log.
  *
@@ -161,8 +161,8 @@ public class TextUtils {
     /**
      * This method receives the stacktrace content as {@link ByteArrayOutputStream} and processes it exactly as
      * described in method {@link #getStacktrace(Throwable, boolean, String)}. Except that it receives the stacktrace
-     * content as byte array so it is agnostic of the fact whether it came from actual exception in real time of from a
-     * log file or any other source. This method allows to work with stack traces extracted on the fly at runtime or
+     * content as byte array, so it is agnostic of the fact whether it came from actual exception in real time of from a
+     * log file or any other source. This method allows working with stack traces extracted on the fly at runtime or
      * taken from some static sources (such as log files)
      *
      * @param cutTBS            boolean that specifies if stacktrace should be shortened. The stacktrace should be
@@ -179,7 +179,7 @@ public class TextUtils {
         // Determine the value of relevant package prefix
         String relPack = (relevantPackage != null && !relevantPackage.isEmpty()) ? relevantPackage : RELEVANT_PACKAGE;
         /*
-         * If the relevant package prefix was not set neither locally nor globally revert to retrieving full stacktrace even if shortening was
+         * If the relevant package prefix was not set locally nor globally revert to retrieving full stacktrace even if shortening was
          * requested
          */
         if (relPack == null || "".equals(relPack)) {
@@ -243,7 +243,7 @@ public class TextUtils {
         result.append(line).append("\n");
         // Flag that holds the status for the current line if it should be printed or not
         boolean toBePrinted = true;
-        // Flag that holds information on previous line whether or not it starts with relevant prefix package
+        // Flag that holds information on previous line whether it starts with relevant prefix package
         boolean relevantPackageReached = false;
         // Flag that specifies if the current line starts with relevant prefix or not
         boolean isCurLineRelevantPack;
@@ -256,7 +256,7 @@ public class TextUtils {
                 /*
                  * This "if" branch deals with lines that are standard stacktrace lines starting with "at "
                  */
-                // Check if the current line starts with thge prefix (after the "at " part)
+                // Check if the current line starts with the prefix (after the "at " part)
                 isCurLineRelevantPack = trimmedLine.substring(STANDARD_STACKTRACE_PREFIX.length()).startsWith(relPack);
                 if (!relevantPackageReached && isCurLineRelevantPack) {
                     /*
@@ -264,8 +264,8 @@ public class TextUtils {
                      * first found line with the prefix and in this case it actually "changes" the flag "toBePrinted" from "true" to "true", but also
                      * it deals with the line with the prefix found after the first section of lines with the prefix was treated and was followed by
                      * some lines without prefix and then again the line with the prefix was found. That is why this "if" branch has to be before the
-                     * actual printing. In this case flag "toBePrinted" is changed from "false" to "true". Also if previous line was the first line
-                     * without prefix and we were supposed to print a skip line here we cancel that by setting flag "skipLineToBePrinted" back to
+                     * actual printing. In this case flag "toBePrinted" is changed from "false" to "true". Also, if previous line was the first line
+                     * without prefix, and we were supposed to print a skip line here we cancel that by setting flag "skipLineToBePrinted" back to
                      * false
                      */
                     relevantPackageReached = true;
@@ -296,7 +296,7 @@ public class TextUtils {
             } else {
                 /*
                  * This "else" branch deals with lines in the stacktrace that either start next singular stacktrace or are the last line in current
-                 * singular stacktrace and it is of the form "... X more" where X is a number.
+                 * singular stacktrace, and it is of the form "... X more" where X is a number.
                  */
                 if (trimmedLine.startsWith(CAUSE_STACKTRACE_PREFIX) || trimmedLine.startsWith(SUPPRESSED_STACKTRACE_PREFIX)) {
                     /*

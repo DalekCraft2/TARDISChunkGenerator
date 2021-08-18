@@ -231,8 +231,8 @@ public class NMSHandler extends NmsHandlerBase {
             // ##### STEP 1: Pause light engine mailbox to process its tasks. #####
             ThreadedMailbox<Runnable> threadedMailbox = (ThreadedMailbox<Runnable>) lightEngine_ThreadedMailbox_e.get(lightEngine);
             // State flags bit mask:
-            // 0x0001 - Closing flag (ThreadedMailbox is closing if non zero).
-            // 0x0002 - Busy flag (ThreadedMailbox performs a task from queue if non zero).
+            // 0x0001 - Closing flag (ThreadedMailbox is closing if non-zero).
+            // 0x0002 - Busy flag (ThreadedMailbox performs a task from queue if non-zero).
             AtomicInteger stateFlags = (AtomicInteger) threadedMailbox_State_d.get(threadedMailbox);
             int flags; // to hold values from stateFlags
             long timeToWait = -1;
@@ -242,7 +242,7 @@ public class NMSHandler extends NmsHandlerBase {
                 if ((flags & 1) != 0) {
                     // ThreadedMailbox is closing. The light engine mailbox may also stop processing tasks.
                     // The light engine mailbox can be close due to server shutdown or unloading (closing) the world.
-                    // I am not sure is it unsafe to process our tasks while the world is closing is closing,
+                    // I am not sure is it unsafe to process our tasks while the world is closing,
                     // but will try it (one can throw exception here if it crashes the server).
                     if (timeToWait == -1) {
                         // Try to wait 3 seconds until light engine mailbox is busy.

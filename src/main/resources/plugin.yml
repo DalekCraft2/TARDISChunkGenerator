@@ -5,6 +5,4 @@ description: Chunk generator for the TARDIS plugin
 version: ${project.version}
 api-version: 1.17
 load: STARTUP
-website: http://tardisjenkins.duckdns.org:8080/job/TARDISChunkGenerator/
-dev-url: https://github.com/eccentricdevotion/TARDISChunkGenerator/
-url: http://eccentricdevotion.github.io/TARDIS/
+website: https://github.com/eccentricdevotion/TARDISChunkGenerator/

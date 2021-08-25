@@ -67,10 +67,10 @@ public class TARDISPlayerDisguiser {
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.connect();
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
-                JsonParser jp = new JsonParser();
-                JsonElement root = jp.parse(new InputStreamReader((InputStream) connection.getContent())); //Convert the input stream to a json element
-                JsonObject rootobj = root.getAsJsonObject();
-                JsonArray jsonArray = rootobj.getAsJsonArray("properties");
+                JsonParser jsonParser = new JsonParser();
+                JsonElement root = jsonParser.parse(new InputStreamReader((InputStream) connection.getContent())); //Convert the input stream to a json element
+                JsonObject rootObject = root.getAsJsonObject();
+                JsonArray jsonArray = rootObject.getAsJsonArray("properties");
                 JsonObject properties = jsonArray.get(0).getAsJsonObject();
                 String skin = properties.get("value").getAsString();
                 String signature = properties.get("signature").getAsString();
@@ -88,10 +88,10 @@ public class TARDISPlayerDisguiser {
 
     public void disguiseToAll() {
         TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p != player && player.getWorld() == p.getWorld()) {
-                p.hidePlayer(player);
-                p.showPlayer(player);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player != this.player && this.player.getWorld() == player.getWorld()) {
+                player.hidePlayer(this.player);
+                player.showPlayer(this.player);
             }
         }
     }

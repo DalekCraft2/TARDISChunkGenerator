@@ -32,27 +32,27 @@ import java.util.concurrent.*;
 
 public class RequestSteamMachine implements Runnable {
 
-    private final Queue<Runnable> REQUEST_QUEUE = new ConcurrentLinkedQueue<>();
+    private final Queue<Runnable> requestQueue = new ConcurrentLinkedQueue<>();
     private final Map<ChunkLocation, ChunkUpdateInfo> chunksToUpdate = new HashMap<>();
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private boolean isStarted;
     private int maxIterationsPerTick;
     // THREADS
-    private ScheduledFuture<?> sch;
+    private ScheduledFuture<?> scheduledFuture;
 
     public void start(int ticks, int maxIterationsPerTick) {
         if (!isStarted) {
             this.maxIterationsPerTick = maxIterationsPerTick;
-            sch = executor.scheduleWithFixedDelay(this, 0, 50L * ticks, TimeUnit.MILLISECONDS);
+            scheduledFuture = executor.scheduleWithFixedDelay(this, 0, 50L * ticks, TimeUnit.MILLISECONDS);
             isStarted = true;
         }
     }
 
     public void shutdown() {
         if (isStarted) {
-            REQUEST_QUEUE.clear();
+            requestQueue.clear();
             maxIterationsPerTick = 0;
-            sch.cancel(false);
+            scheduledFuture.cancel(false);
             isStarted = false;
         }
     }
@@ -63,7 +63,7 @@ public class RequestSteamMachine implements Runnable {
 
     public void addToQueue(Runnable request) {
         if (request != null) {
-            REQUEST_QUEUE.add(request);
+            requestQueue.add(request);
         }
     }
 
@@ -90,7 +90,7 @@ public class RequestSteamMachine implements Runnable {
         try {
             int iterationsCount = 0;
             Runnable request;
-            while (iterationsCount < maxIterationsPerTick && (request = REQUEST_QUEUE.poll()) != null) {
+            while (iterationsCount < maxIterationsPerTick && (request = requestQueue.poll()) != null) {
                 request.run();
                 iterationsCount++;
             }

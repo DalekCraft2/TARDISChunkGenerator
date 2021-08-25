@@ -68,76 +68,76 @@ public class TARDISLogFilter implements Filter {
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object... objects) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String msg, Object... params) {
+        return checkMessage(msg);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2, Object o3) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2, Object o3, Object o4) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2, Object o3, Object o4, Object o5) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2, Object o3, Object o4, Object o5, Object o6) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2, Object o3, Object o4, Object o5, Object o6, Object o7) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2, Object o3, Object o4, Object o5, Object o6, Object o7, Object o8) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7, Object p8) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String s, Object o, Object o1, Object o2, Object o3, Object o4, Object o5, Object o6, Object o7, Object o8, Object o9) {
-        return checkMessage(s);
+    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7, Object p8, Object p9) {
+        return checkMessage(message);
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, Object o, Throwable throwable) {
-        return checkMessage(TextUtils.getStacktrace(throwable, true, "me.eccentric_nz."));
+    public Result filter(Logger logger, Level level, Marker marker, Object msg, Throwable t) {
+        return checkMessage(TextUtils.getStacktrace(t, true, "me.eccentric_nz."));
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, Message message, Throwable throwable) {
-        return checkMessage(TextUtils.getStacktrace(throwable, true, "me.eccentric_nz."));
+    public Result filter(Logger logger, Level level, Marker marker, Message msg, Throwable t) {
+        return checkMessage(TextUtils.getStacktrace(t, true, "me.eccentric_nz."));
     }
 
     @Override
-    public Result filter(LogEvent logEvent) {
-        if (logEvent.getThrown() != null) {
-            return checkMessage(TextUtils.getStacktrace(logEvent.getThrown(), true, "me.eccentric_nz."));
+    public Result filter(LogEvent event) {
+        if (event.getThrown() != null) {
+            return checkMessage(TextUtils.getStacktrace(event.getThrown(), true, "me.eccentric_nz."));
         }
-        return checkMessage(logEvent.getMessage().getFormattedMessage());
+        return checkMessage(event.getMessage().getFormattedMessage());
     }
 
     @Override

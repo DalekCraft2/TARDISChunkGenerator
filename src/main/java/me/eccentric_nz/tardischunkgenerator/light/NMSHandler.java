@@ -110,30 +110,30 @@ public class NMSHandler extends NmsHandlerBase {
         // 18 bits, with the lowest bit corresponding to chunk section -1 (in the void,
         // y=-16 to y=-1) and the highest bit for chunk section 16 (above the world,
         // y=256 to y=271).
-        LightEngine let = chunk.i.getChunkProvider().getLightEngine();
+        LightEngine lightEngine = chunk.i.getChunkProvider().getLightEngine();
         BitSet sky = new BitSet(sectionsMaskSky);
         BitSet block = new BitSet(sectionsMaskBlock);
-        PacketPlayOutLightUpdate packet = new PacketPlayOutLightUpdate(chunk.getPos(), let, sky, block, true);
+        PacketPlayOutLightUpdate packet = new PacketPlayOutLightUpdate(chunk.getPos(), lightEngine, sky, block, true);
         ((CraftPlayer) player).getHandle().b.sendPacket(packet); // b = playerConnection
     }
 
-    private void setRawLightLevel(World world, LightType type, int blockX, int blockY, int blockZ, int lightlevel) {
+    private void setRawLightLevel(World world, LightType lightType, int blockX, int blockY, int blockZ, int lightLevel) {
         WorldServer worldServer = ((CraftWorld) world).getHandle();
         BlockPosition position = new BlockPosition(blockX, blockY, blockZ);
         LightEngineThreaded lightEngine = worldServer.getChunkProvider().getLightEngine();
 
-        int finalLightLevel = lightlevel < 0 ? 0 : Math.min(lightlevel, 15);
+        int finalLightLevel = lightLevel < 0 ? 0 : Math.min(lightLevel, 15);
         executeSync(lightEngine, () -> {
-            if (type == LightType.SKY) {
+            if (lightType == LightType.SKY) {
                 LightEngineLayerEventListener layer = lightEngine.a(EnumSkyBlock.a); // a = SKY
-                if (!(layer instanceof LightEngineSky les)) {
+                if (!(layer instanceof LightEngineSky lightEngineSky)) {
                     return;
                 }
                 if (finalLightLevel == 0) {
-                    les.a(position);
-                } else if (les.a(SectionPosition.a(position)) != null) {
+                    lightEngineSky.a(position);
+                } else if (lightEngineSky.a(SectionPosition.a(position)) != null) {
                     try {
-                        lightEngineLayer_a(les, position, finalLightLevel);
+                        lightEngineLayer_a(lightEngineSky, position, finalLightLevel);
                     } catch (NullPointerException ignore) {
                         // To prevent problems with the absence of the NibbleArray, even
                         // if les.a(SectionPosition.a(position)) returns non-null value (corrupted data)
@@ -141,14 +141,14 @@ public class NMSHandler extends NmsHandlerBase {
                 }
             } else {
                 LightEngineLayerEventListener layer = lightEngine.a(EnumSkyBlock.b); // b = BLOCK
-                if (!(layer instanceof LightEngineBlock leb)) {
+                if (!(layer instanceof LightEngineBlock lightEngineBlock)) {
                     return;
                 }
                 if (finalLightLevel == 0) {
-                    leb.a(position);
-                } else if (leb.a(SectionPosition.a(position)) != null) {
+                    lightEngineBlock.a(position);
+                } else if (lightEngineBlock.a(SectionPosition.a(position)) != null) {
                     try {
-                        leb.a(position, finalLightLevel);
+                        lightEngineBlock.a(position, finalLightLevel);
                     } catch (NullPointerException ignore) {
                         // To prevent problems with the absence of the NibbleArray, even
                         // if leb.a(SectionPosition.a(position)) returns non-null value (corrupted data)
@@ -181,16 +181,16 @@ public class NMSHandler extends NmsHandlerBase {
                             if (isValidSectionY(world, sectionY)) {
                                 int chunkX = blockX >> 4;
                                 int chunkZ = blockZ >> 4;
-                                ChunkInfo cCoord = new ChunkInfo(world, chunkX + dx, sectionY << 4, chunkZ + dz, players != null ? players : (players = world.getPlayers()));
-                                list.add(cCoord);
+                                ChunkInfo chunkCoord = new ChunkInfo(world, chunkX + dx, sectionY << 4, chunkZ + dz, players != null ? players : (players = world.getPlayers()));
+                                list.add(chunkCoord);
                             }
                         }
                         for (int sectionY = blockY >> 4; sectionY >= -1; sectionY--) {
                             if (isValidSectionY(world, sectionY)) {
                                 int chunkX = blockX >> 4;
                                 int chunkZ = blockZ >> 4;
-                                ChunkInfo cCoord = new ChunkInfo(world, chunkX + dx, sectionY << 4, chunkZ + dz, players != null ? players : (players = world.getPlayers()));
-                                list.add(cCoord);
+                                ChunkInfo chunkCoord = new ChunkInfo(world, chunkX + dx, sectionY << 4, chunkZ + dz, players != null ? players : (players = world.getPlayers()));
+                                list.add(chunkCoord);
                             }
                         }
                     }
@@ -206,7 +206,7 @@ public class NMSHandler extends NmsHandlerBase {
     }
 
     @Override
-    protected void recalculateLighting(World world, int blockX, int blockY, int blockZ, LightType type) {
+    protected void recalculateLighting(World world, int blockX, int blockY, int blockZ, LightType lightType) {
         WorldServer worldServer = ((CraftWorld) world).getHandle();
         LightEngineThreaded lightEngine = worldServer.getChunkProvider().getLightEngine();
 
@@ -216,12 +216,12 @@ public class NMSHandler extends NmsHandlerBase {
         }
 
         executeSync(lightEngine, () -> {
-            if (type == LightType.SKY) {
-                LightEngineSky les = (LightEngineSky) lightEngine.a(EnumSkyBlock.a); // a = SKY
-                les.a(Integer.MAX_VALUE, true, true);
+            if (lightType == LightType.SKY) {
+                LightEngineSky lightEngineSky = (LightEngineSky) lightEngine.a(EnumSkyBlock.a); // a = SKY
+                lightEngineSky.a(Integer.MAX_VALUE, true, true);
             } else {
-                LightEngineBlock leb = (LightEngineBlock) lightEngine.a(EnumSkyBlock.b); // b = BLOCK
-                leb.a(Integer.MAX_VALUE, true, true);
+                LightEngineBlock lightEngineBlock = (LightEngineBlock) lightEngine.a(EnumSkyBlock.b); // b = BLOCK
+                lightEngineBlock.a(Integer.MAX_VALUE, true, true);
             }
         });
     }
@@ -278,11 +278,11 @@ public class NMSHandler extends NmsHandlerBase {
         }
     }
 
-    private void lightEngineLayer_a(LightEngineLayer<?, ?> les, BlockPosition var0, int var1) {
+    private void lightEngineLayer_a(LightEngineLayer<?, ?> lightEngineLayer, BlockPosition blockPosition, int var1) {
         try {
-            LightEngineStorage<?> ls = (LightEngineStorage<?>) lightEngineLayer_d.get(les);
-            lightEngineStorage_d.invoke(ls);
-            lightEngineGraph_a.invoke(les, 9223372036854775807L, var0.asLong(), 15 - var1, true);
+            LightEngineStorage<?> lightEngineStorage = (LightEngineStorage<?>) lightEngineLayer_d.get(lightEngineLayer);
+            lightEngineStorage_d.invoke(lightEngineStorage);
+            lightEngineGraph_a.invoke(lightEngineLayer, 9223372036854775807L, blockPosition.asLong(), 15 - var1, true);
         } catch (InvocationTargetException e) {
             throw toRuntimeException(e.getCause());
         } catch (IllegalAccessException e) {

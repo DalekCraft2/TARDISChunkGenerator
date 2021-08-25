@@ -42,10 +42,10 @@ public class ChunkInfo {
         this(world, chunkX, 256, chunkZ, players);
     }
 
-    public ChunkInfo(World world, int chunkX, int chunk_y_height, int chunkZ, Collection<? extends Player> players) {
+    public ChunkInfo(World world, int chunkX, int chunkYHeight, int chunkZ, Collection<? extends Player> players) {
         this.world = world;
         x = chunkX;
-        y = chunk_y_height >> 4;
+        y = chunkYHeight >> 4;
         z = chunkZ;
         receivers = players;
     }

@@ -28,9 +28,9 @@ public class TextUtils {
     private static final String RELEVANT_PACKAGE_SYSTEM_ENVIRONMENT_VARIABLE = "MGNT_RELEVANT_PACKAGE";
     private static final String RELEVANT_PACKAGE_SYSTEM_PROPERTY = "mgnt.relevant.package";
     /*
-     * Strings defined bellow are for the use of methods getStacktrace() of this class
+     * Strings defined below are for the use of methods getStacktrace() of this class
      */
-    private static String RELEVANT_PACKAGE = null;
+    private static String relevantPackage = null;
 
     static {
         initRelevantPackageFromSystemProperty();
@@ -108,7 +108,7 @@ public class TextUtils {
      * <br>
      * </p>
      *
-     * @param e               {@link Throwable} from which stacktrace should be retrieved
+     * @param throwable               {@link Throwable} from which stacktrace should be retrieved
      * @param cutTBS          boolean that specifies if stacktrace should be shortened. The stacktrace should be
      *                        shortened if this flag is set to {@code true}. Note that if this parameter set to {@code
      *                        false} the stacktrace will be printed in full and parameter <b>relevantPackage</b> becomes
@@ -118,10 +118,10 @@ public class TextUtils {
      *                        example above it should be "com.plain.analytics.v2.utils.test.".
      * @return String with stacktrace value
      */
-    public static String getStacktrace(Throwable e, boolean cutTBS, String relevantPackage) {
+    public static String getStacktrace(Throwable throwable, boolean cutTBS, String relevantPackage) {
         // retrieve full stacktrace as byte array
         ByteArrayOutputStream stacktraceContent = new ByteArrayOutputStream();
-        e.printStackTrace(new PrintStream(stacktraceContent));
+        throwable.printStackTrace(new PrintStream(stacktraceContent));
         return extractStackTrace(cutTBS, relevantPackage, stacktraceContent);
     }
 
@@ -150,12 +150,12 @@ public class TextUtils {
      * </p></li>
      * </ul>
      *
-     * @param e {@link Throwable} from which stacktrace should be retrieved
+     * @param throwable {@link Throwable} from which stacktrace should be retrieved
      * @return String that contains the stacktrace
      * @see #getStacktrace(Throwable, boolean, String)
      */
-    public static String getStacktrace(Throwable e) {
-        return getStacktrace(e, true, null);
+    public static String getStacktrace(Throwable throwable) {
+        return getStacktrace(throwable, true, null);
     }
 
     /**
@@ -177,7 +177,7 @@ public class TextUtils {
     private static String extractStackTrace(boolean cutTBS, String relevantPackage, ByteArrayOutputStream stacktraceContent) {
         StringBuilder result = new StringBuilder("\n");
         // Determine the value of relevant package prefix
-        String relPack = (relevantPackage != null && !relevantPackage.isEmpty()) ? relevantPackage : RELEVANT_PACKAGE;
+        String relPack = (relevantPackage != null && !relevantPackage.isEmpty()) ? relevantPackage : TextUtils.relevantPackage;
         /*
          * If the relevant package prefix was not set locally nor globally revert to retrieving full stacktrace even if shortening was
          * requested
@@ -203,11 +203,11 @@ public class TextUtils {
                          */
                         line = traverseSingularStacktrace(result, relPack, reader, line);
                     } while (line != null);
-                } catch (IOException ioe) {
+                } catch (IOException e) {
                     /*
                      * In the very unlikely event of any error just fall back on printing the full stacktrace
                      */
-                    error(ioe);
+                    error(e);
                     result.delete(0, result.length()).append(stacktraceContent);
                 }
             }
@@ -327,14 +327,14 @@ public class TextUtils {
      * @see #getStacktrace(Throwable, boolean, String)
      */
     public static void setRelevantPackage(String relevantPackage) {
-        RELEVANT_PACKAGE = relevantPackage;
+        TextUtils.relevantPackage = relevantPackage;
     }
 
-    private static void error(Throwable t) {
-        if (RELEVANT_PACKAGE != null && !RELEVANT_PACKAGE.isEmpty()) {
-            LOGGER.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace" + getStacktrace(t));
+    private static void error(Throwable throwable) {
+        if (relevantPackage != null && !relevantPackage.isEmpty()) {
+            LOGGER.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace" + getStacktrace(throwable));
         } else {
-            LOGGER.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace", t);
+            LOGGER.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace", throwable);
         }
     }
 }

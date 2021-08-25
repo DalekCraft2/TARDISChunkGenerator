@@ -55,105 +55,105 @@ public class TARDISDisguise {
         this.options = options;
     }
 
-    public static net.minecraft.world.entity.Entity createMobDisguise(TARDISDisguise disguise, World w) {
-        String str;
+    public static net.minecraft.world.entity.Entity createMobDisguise(TARDISDisguise disguise, World world) {
+        String entityName;
         String packagePath = "net.minecraft.world.entity.";
         boolean hasEntityStr = true;
         switch (disguise.getEntityType()) {
             case AXOLOTL -> {
-                str = "Axolotl";
+                entityName = "Axolotl";
                 packagePath += "animal.axolotl.";
                 hasEntityStr = false;
             }
             case BAT -> {
-                str = "Bat";
+                entityName = "Bat";
                 packagePath += "ambient.";
             }
             case GOAT -> {
-                str = "Goat";
+                entityName = "Goat";
                 packagePath += "animal.goat.";
                 hasEntityStr = false;
             }
             case ZOMBIE_HORSE, SKELETON_HORSE, TRADER_LLAMA -> {
-                str = switchAndCapitalise(disguise.getEntityType().toString());
+                entityName = switchAndCapitalise(disguise.getEntityType().toString());
                 packagePath += "animal.horse.";
             }
             case ELDER_GUARDIAN, WITHER_SKELETON -> {
-                str = switchAndCapitalise(disguise.getEntityType().toString());
+                entityName = switchAndCapitalise(disguise.getEntityType().toString());
                 packagePath += "monster.";
             }
             case WANDERING_TRADER -> {
-                str = "VillagerTrader";
+                entityName = "VillagerTrader";
                 packagePath += "npc.";
             }
             case HUSK -> {
-                str = "ZombieHusk";
+                entityName = "ZombieHusk";
                 packagePath += "monster.";
             }
             case STRAY -> {
-                str = "SkeletonStray";
+                entityName = "SkeletonStray";
                 packagePath += "monster.";
             }
             case PUFFERFISH -> {
-                str = "PufferFish";
+                entityName = "PufferFish";
                 packagePath += "animal.";
             }
             case ILLUSIONER -> {
-                str = "IllagerIllusioner";
+                entityName = "IllagerIllusioner";
                 packagePath += "monster.";
             }
             case GIANT -> {
-                str = "GiantZombie";
+                entityName = "GiantZombie";
                 packagePath += "monster.";
             }
             case HORSE, LLAMA -> {
-                str = capitalise(disguise.getEntityType().toString());
+                entityName = capitalise(disguise.getEntityType().toString());
                 packagePath += "animal.horse.";
             }
             case DONKEY, MULE -> {
-                str = "Horse" + capitalise(disguise.getEntityType().toString());
+                entityName = "Horse" + capitalise(disguise.getEntityType().toString());
                 packagePath += "animal.horse.";
             }
             case VILLAGER -> {
-                str = "Villager";
+                entityName = "Villager";
                 packagePath += "npc.";
             }
             case ZOMBIFIED_PIGLIN -> {
-                str = "PigZombie";
+                entityName = "PigZombie";
                 packagePath += "monster.";
             }
             case BLAZE, CAVE_SPIDER, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE, PHANTOM, PILLAGER, RAVAGER, SHULKER, SILVERFISH, SKELETON, SLIME, SPIDER, STRIDER, VEX, VINDICATOR, WITCH, ZOGLIN, ZOMBIE, ZOMBIE_VILLAGER -> {
-                str = capitalise(disguise.getEntityType().toString());
+                entityName = capitalise(disguise.getEntityType().toString());
                 packagePath += "monster.";
             }
             case HOGLIN -> {
-                str = "Hoglin";
+                entityName = "Hoglin";
                 packagePath += "monster.hoglin.";
             }
             case WITHER -> {
-                str = "Wither";
+                entityName = "Wither";
                 packagePath += "boss.wither.";
             }
             case PIGLIN, PIGLIN_BRUTE -> {
-                str = capitalise(disguise.getEntityType().toString());
+                entityName = capitalise(disguise.getEntityType().toString());
                 packagePath += "monster.piglin.";
             }
             case GLOW_SQUID -> {
-                str = "GlowSquid";
+                entityName = "GlowSquid";
                 hasEntityStr = false;
             }
             default -> {
-                str = capitalise(disguise.getEntityType().toString());
+                entityName = capitalise(disguise.getEntityType().toString());
                 packagePath += "animal.";
             }
         }
         try {
-            String entityPackage = packagePath + ((hasEntityStr) ? "Entity" : "") + str;
+            String entityPackage = packagePath + ((hasEntityStr) ? "Entity" : "") + entityName;
             Class<?> entityClass = Class.forName(entityPackage);
             Constructor<?> constructor = entityClass.getConstructor(EntityTypes.class, net.minecraft.world.level.World.class);
             EntityTypes<?> type = IRegistry.Y.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
-            net.minecraft.world.level.World world = ((CraftWorld) w).getHandle();
-            net.minecraft.world.entity.Entity entity = (net.minecraft.world.entity.Entity) constructor.newInstance(type, world);
+            net.minecraft.world.level.World nmsWorld = ((CraftWorld) world).getHandle();
+            net.minecraft.world.entity.Entity entity = (net.minecraft.world.entity.Entity) constructor.newInstance(type, nmsWorld);
             if (disguise.getOptions() != null) {
                 for (Object o : disguise.getOptions()) {
                     if (o instanceof DyeColor) {

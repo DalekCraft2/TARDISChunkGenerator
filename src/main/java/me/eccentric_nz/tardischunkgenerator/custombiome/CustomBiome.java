@@ -24,19 +24,19 @@ public class CustomBiome {
         DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
         ResourceKey<BiomeBase> minecraftKey = ResourceKey.a(IRegistry.aO, new MinecraftKey("minecraft", data.getMinecraftName()));
         ResourceKey<BiomeBase> customKey = ResourceKey.a(IRegistry.aO, new MinecraftKey("tardis", data.getCustomName()));
-        IRegistryWritable<BiomeBase> registrywritable = dedicatedServer.getCustomRegistry().b(IRegistry.aO);
-        BiomeBase minecraftbiome = registrywritable.a(minecraftKey);
+        IRegistryWritable<BiomeBase> registryWritable = dedicatedServer.getCustomRegistry().b(IRegistry.aO);
+        BiomeBase minecraftBiome = registryWritable.a(minecraftKey);
         BiomeBase.a newBiome = new BiomeBase.a();
         try {
             Field biomeSettingMobsField = BiomeBase.class.getDeclaredField("m");
             biomeSettingMobsField.setAccessible(true);
-            newBiome.a(minecraftbiome.t());
-            newBiome.a(minecraftbiome.c());
-            BiomeSettingsMobs biomeSettingMobs = (BiomeSettingsMobs) biomeSettingMobsField.get(minecraftbiome);
+            newBiome.a(minecraftBiome.t());
+            newBiome.a(minecraftBiome.c());
+            BiomeSettingsMobs biomeSettingMobs = (BiomeSettingsMobs) biomeSettingMobsField.get(minecraftBiome);
             Field biomeSettingGenField = BiomeBase.class.getDeclaredField("l");
             biomeSettingGenField.setAccessible(true);
             newBiome.a(biomeSettingMobs);
-            BiomeSettingsGeneration biomeSettingGen = (BiomeSettingsGeneration) biomeSettingGenField.get(minecraftbiome);
+            BiomeSettingsGeneration biomeSettingGen = (BiomeSettingsGeneration) biomeSettingGenField.get(minecraftBiome);
             newBiome.a(biomeSettingGen);
             newBiome.a(data.getDepth()); // depth of biome
             newBiome.b(data.getScale()); // scale of biome

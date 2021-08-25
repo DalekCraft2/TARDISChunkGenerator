@@ -61,9 +61,9 @@ public interface TARDISHelperAPI {
     /**
      * Set the FallFlying NBT tag on an entity.
      *
-     * @param e the entity to set the NBT tag for
+     * @param entity the entity to set the NBT tag for
      */
-    void setFallFlyingTag(Entity e);
+    void setFallFlyingTag(Entity entity);
 
     /**
      * Open a sign editing GUI.
@@ -97,9 +97,9 @@ public interface TARDISHelperAPI {
      * Sets the GameType value for a world.
      *
      * @param world the world to set the GameMode for
-     * @param gm    the GameMode to set the world to
+     * @param gameMode    the GameMode to set the world to
      */
-    void setWorldGameMode(String world, GameMode gm);
+    void setWorldGameMode(String world, GameMode gameMode);
 
     /**
      * Gets some data of a world by reading its level.dat file.
@@ -174,18 +174,18 @@ public interface TARDISHelperAPI {
     /**
      * Disguises an armour stand as another entity.
      *
-     * @param stand      the armour stand to disguise
+     * @param armorStand      the armour stand to disguise
      * @param entityType the entity type to disguise as
      * @param options    an array of entity options
      */
-    void disguiseArmourStand(ArmorStand stand, EntityType entityType, Object[] options);
+    void disguiseArmourStand(ArmorStand armorStand, EntityType entityType, Object[] options);
 
     /**
      * Undisguises an armour stand.
      *
-     * @param stand the armour stand to undisguise
+     * @param armorStand the armour stand to undisguise
      */
-    void undisguiseArmourStand(ArmorStand stand);
+    void undisguiseArmourStand(ArmorStand armorStand);
 
     /**
      * Create a light source

@@ -52,12 +52,12 @@ public class TARDISEPSDisguiser {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer nmsWorld = ((CraftWorld) world).getHandle();
         for (Map.Entry<Integer, UUID> map : TARDISDisguiseTracker.DISGUISED_NPCS.entrySet()) {
-            Entity stand = nmsWorld.getEntity(map.getKey());
-            if (stand != null && stand.getWorld().getWorld() == world) {
+            Entity armorStand = nmsWorld.getEntity(map.getKey());
+            if (armorStand != null && armorStand.getWorld().getWorld() == world) {
                 EntityPlayer entityPlayer = ((CraftPlayer) Bukkit.getOfflinePlayer(map.getValue())).getHandle();
                 EntityPlayer npc = new EntityPlayer(server, nmsWorld, entityPlayer.getProfile());
                 // set location
-                setEntityLocation(npc, new Location(world, stand.locX(), stand.locY(), stand.locZ()));
+                setEntityLocation(npc, new Location(world, armorStand.locX(), armorStand.locY(), armorStand.locZ()));
                 // send packets
                 PacketPlayOutPlayerInfo packetPlayOutPlayerInfo = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, npc); // a = ADD_PLAYER
                 PacketPlayOutNamedEntitySpawn packetPlayOutNamedEntitySpawn = new PacketPlayOutNamedEntitySpawn(npc);
@@ -88,9 +88,9 @@ public class TARDISEPSDisguiser {
     public static void removeNPC(int id, World world) {
         TARDISDisguiseTracker.DISGUISED_NPCS.remove(id);
         PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(id);
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (world == p.getWorld()) {
-                PlayerConnection connection = ((CraftPlayer) p).getHandle().b; // b = playerConnection
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (world == player.getWorld()) {
+                PlayerConnection connection = ((CraftPlayer) player).getHandle().b; // b = playerConnection
                 connection.sendPacket(packetPlayOutEntityDestroy);
             }
         }
@@ -126,9 +126,9 @@ public class TARDISEPSDisguiser {
         PacketPlayOutNamedEntitySpawn packetPlayOutNamedEntitySpawn = new PacketPlayOutNamedEntitySpawn(npc);
         PacketPlayOutEntityHeadRotation packetPlayOutEntityHeadRotation = new PacketPlayOutEntityHeadRotation(npc, (byte) npc.getYRot());
         PacketPlayOutEntity.PacketPlayOutEntityLook packetPlayOutEntityLook = new PacketPlayOutEntity.PacketPlayOutEntityLook(npc.getId(), (byte) npc.getYRot(), (byte) npc.getXRot(), true);
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.getWorld() == location.getWorld()) {
-                PlayerConnection connection = ((CraftPlayer) p).getHandle().b; // b = playerConnection
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player.getWorld() == location.getWorld()) {
+                PlayerConnection connection = ((CraftPlayer) player).getHandle().b; // b = playerConnection
                 connection.sendPacket(packetPlayOutPlayerInfo);
                 connection.sendPacket(packetPlayOutNamedEntitySpawn);
                 connection.sendPacket(packetPlayOutEntityHeadRotation);

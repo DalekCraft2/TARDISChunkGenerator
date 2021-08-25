@@ -35,19 +35,19 @@ public class TARDISChunkGenerator extends ChunkGenerator {
      *
      * @param world  the world to generate chunks in
      * @param random a pseudorandom number generator
-     * @param cx     the chunk's x coordinate
-     * @param cz     the chunk's z coordinate
+     * @param x     the chunk's x coordinate
+     * @param z     the chunk's z coordinate
      * @return the ChunkData to be generated
      */
     @Override
-    public @NotNull ChunkData generateChunkData(@NotNull World world, @NotNull Random random, int cx, int cz, @NotNull BiomeGrid biome) {
+    public @NotNull ChunkData generateChunkData(@NotNull World world, @NotNull Random random, int x, int z, @NotNull BiomeGrid biome) {
 
         ChunkData result = createChunkData(world);
         result.setRegion(0, 0, 0, 16, world.getMaxHeight(), 16, Material.VOID_AIR);
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                for (int y = 0; y < world.getMaxHeight(); y++) {
-                    biome.setBiome(x, y, z, Biome.THE_VOID);
+        for (int xx = 0; xx < 16; xx++) {
+            for (int zz = 0; zz < 16; zz++) {
+                for (int yy = 0; yy < world.getMaxHeight(); yy++) {
+                    biome.setBiome(xx, yy, zz, Biome.THE_VOID);
                 }
             }
         }

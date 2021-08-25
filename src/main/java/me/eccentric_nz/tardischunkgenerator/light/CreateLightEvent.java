@@ -72,8 +72,8 @@ public class CreateLightEvent extends Event implements Cancellable {
     }
 
     @Override
-    public void setCancelled(boolean arg0) {
-        cancel = arg0;
+    public void setCancelled(boolean cancel) {
+        this.cancel = cancel;
     }
 
     public int getLightLevel() {
@@ -120,8 +120,8 @@ public class CreateLightEvent extends Event implements Cancellable {
         return async;
     }
 
-    public void setAsync(boolean flag) {
-        async = flag;
+    public void setAsync(boolean async) {
+        this.async = async;
     }
 
     public LightType getLightType() {

@@ -45,11 +45,11 @@ public class BiomeHelper {
                 return false;
             }
         }
-        World w = ((CraftWorld) chunk.getWorld()).getHandle();
+        World world = ((CraftWorld) chunk.getWorld()).getHandle();
         for (int x = 0; x <= 15; x++) {
             for (int z = 0; z <= 15; z++) {
                 for (int y = 0; y <= chunk.getWorld().getMaxHeight(); y++) {
-                    setCustomBiome(chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z, w, base);
+                    setCustomBiome(chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z, world, base);
                 }
             }
         }
@@ -66,13 +66,13 @@ public class BiomeHelper {
      */
     public boolean setCustomBiome(String newBiomeName, Location location) {
         BiomeBase base;
-        IRegistryWritable<BiomeBase> registrywritable = dedicatedServer.getCustomRegistry().b(IRegistry.aO);
+        IRegistryWritable<BiomeBase> registryWritable = dedicatedServer.getCustomRegistry().b(IRegistry.aO);
         ResourceKey<BiomeBase> key = ResourceKey.a(IRegistry.aO, new MinecraftKey(newBiomeName.toLowerCase()));
-        base = registrywritable.a(key);
+        base = registryWritable.a(key);
         if (base == null) {
             if (newBiomeName.contains(":")) {
                 ResourceKey<BiomeBase> newKey = ResourceKey.a(IRegistry.aO, new MinecraftKey(newBiomeName.split(":")[0].toLowerCase(), newBiomeName.split(":")[1].toLowerCase()));
-                base = registrywritable.a(newKey);
+                base = registryWritable.a(newKey);
                 if (base == null) {
                     return false;
                 }
@@ -85,14 +85,14 @@ public class BiomeHelper {
         return true;
     }
 
-    private void setCustomBiome(int x, int y, int z, World w, BiomeBase bb) {
+    private void setCustomBiome(int x, int y, int z, World world, BiomeBase biomeBase) {
         BlockPosition pos = new BlockPosition(x, 0, z);
-        if (w.isLoaded(pos)) {
-            net.minecraft.world.level.chunk.Chunk chunk = w.getChunkAtWorldCoords(pos);
+        if (world.isLoaded(pos)) {
+            net.minecraft.world.level.chunk.Chunk chunk = world.getChunkAtWorldCoords(pos);
             if (chunk != null) {
                 BiomeStorage biomeStorage = chunk.getBiomeIndex();
                 if (biomeStorage != null) {
-                    biomeStorage.setBiome(x >> 2, y >> 2, z >> 2, bb);
+                    biomeStorage.setBiome(x >> 2, y >> 2, z >> 2, biomeBase);
                     chunk.markDirty();
                 }
             }
@@ -105,12 +105,12 @@ public class BiomeHelper {
      * @param chunk the chunk to refresh
      */
     private void refreshChunksForAll(Chunk chunk) {
-        net.minecraft.world.level.chunk.Chunk c = ((CraftChunk) chunk).getHandle();
+        net.minecraft.world.level.chunk.Chunk nmsChunk = ((CraftChunk) chunk).getHandle();
         int viewDistance = Bukkit.getServer().getViewDistance() * 16;
         int viewDistanceSquared = viewDistance * viewDistance;
         for (Player player : chunk.getWorld().getPlayers()) {
             if (player.isOnline() && player.getLocation().distanceSquared(chunk.getBlock(0, 0, 0).getLocation()) < viewDistanceSquared) {
-                ((CraftPlayer) player).getHandle().b.sendPacket(new PacketPlayOutMapChunk(c));
+                ((CraftPlayer) player).getHandle().b.sendPacket(new PacketPlayOutMapChunk(nmsChunk));
             }
         }
     }

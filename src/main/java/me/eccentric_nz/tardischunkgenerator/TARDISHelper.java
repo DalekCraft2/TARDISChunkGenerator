@@ -150,8 +150,8 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
     }
 
     @Override
-    public void setFallFlyingTag(org.bukkit.entity.Entity e) {
-        Entity nmsEntity = ((CraftEntity) e).getHandle();
+    public void setFallFlyingTag(org.bukkit.entity.Entity entity) {
+        Entity nmsEntity = ((CraftEntity) entity).getHandle();
         NBTTagCompound tag = new NBTTagCompound();
         // writes the entity's NBT data to the `tag` object
         nmsEntity.save(tag);
@@ -228,7 +228,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
     }
 
     @Override
-    public void setWorldGameMode(String world, GameMode gm) {
+    public void setWorldGameMode(String world, GameMode gameMode) {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
             try {
@@ -236,7 +236,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
                 NBTTagCompound tagCompound = NBTCompressedStreamTools.a(fileinputstream);
                 NBTTagCompound data = tagCompound.getCompound("Data");
                 fileinputstream.close();
-                int mode = switch (gm) {
+                int mode = switch (gameMode) {
                     case CREATIVE -> 1;
                     case ADVENTURE -> 2;
                     case SPECTATOR -> 3;
@@ -341,13 +341,13 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
     }
 
     @Override
-    public void disguiseArmourStand(ArmorStand stand, EntityType entityType, Object[] options) {
-        new TARDISArmourStandDisguiser(stand, entityType, options).disguiseToAll();
+    public void disguiseArmourStand(ArmorStand armorStand, EntityType entityType, Object[] options) {
+        new TARDISArmourStandDisguiser(armorStand, entityType, options).disguiseToAll();
     }
 
     @Override
-    public void undisguiseArmourStand(ArmorStand stand) {
-        TARDISArmourStandDisguiser.removeDisguise(stand);
+    public void undisguiseArmourStand(ArmorStand armorStand) {
+        TARDISArmourStandDisguiser.removeDisguise(armorStand);
     }
 
     @Override

@@ -45,10 +45,10 @@ public class TARDISChameleonArchDisguiser {
     public void changeSkin(String name) {
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         // set name
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            EntityPlayer ep = ((CraftPlayer) p).getHandle();
-            if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.b.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer)); // b = playerConnection, e = REMOVE_PLAYER
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            EntityPlayer entityPlayer1 = ((CraftPlayer) player).getHandle();
+            if (entityPlayer1 != entityPlayer && player.getWorld() == this.player.getWorld() && player.canSee(this.player)) {
+                entityPlayer1.b.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer)); // b = playerConnection, e = REMOVE_PLAYER
             }
         }
         TARDISDisguiseTracker.ARCHED.put(player.getUniqueId(), new TARDISDisguiseTracker.ProfileData(entityPlayer.getProfile().getProperties(), player.getName()));
@@ -56,10 +56,10 @@ public class TARDISChameleonArchDisguiser {
             GameProfile arch = new GameProfile(player.getUniqueId(), name);
             arch.getProperties().removeAll("textures");
             arch.getProperties().put("textures", new Property("textures", archSkin, archSignature));
-            Field gpField = EntityHuman.class.getDeclaredField("cs"); // cs = GameProfile
-            gpField.setAccessible(true);
-            gpField.set(entityPlayer, arch);
-            gpField.setAccessible(false);
+            Field gameProfileField = EntityHuman.class.getDeclaredField("cs"); // cs = GameProfile
+            gameProfileField.setAccessible(true);
+            gameProfileField.set(entityPlayer, arch);
+            gameProfileField.setAccessible(false);
         } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
             TARDISDisguiseTracker.ARCHED.remove(player.getUniqueId());
             return;
@@ -67,12 +67,12 @@ public class TARDISChameleonArchDisguiser {
         PacketPlayOutPlayerInfo packetPlayOutPlayerInfo = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, entityPlayer); // a = ADD_PLAYER
         PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(player.getEntityId());
         PacketPlayOutNamedEntitySpawn packetPlayOutNamedEntitySpawn = new PacketPlayOutNamedEntitySpawn(entityPlayer);
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            EntityPlayer ep = ((CraftPlayer) p).getHandle();
-            if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.b.sendPacket(packetPlayOutPlayerInfo);
-                ep.b.sendPacket(packetPlayOutEntityDestroy);
-                ep.b.sendPacket(packetPlayOutNamedEntitySpawn); // b = playerConnection
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            EntityPlayer entityPlayer1 = ((CraftPlayer) player).getHandle();
+            if (entityPlayer1 != entityPlayer && player.getWorld() == this.player.getWorld() && player.canSee(this.player)) {
+                entityPlayer1.b.sendPacket(packetPlayOutPlayerInfo);
+                entityPlayer1.b.sendPacket(packetPlayOutEntityDestroy);
+                entityPlayer1.b.sendPacket(packetPlayOutNamedEntitySpawn); // b = playerConnection
             }
         }
     }
@@ -80,10 +80,10 @@ public class TARDISChameleonArchDisguiser {
     public void resetSkin() {
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         // set name
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            EntityPlayer ep = ((CraftPlayer) p).getHandle();
-            if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.b.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer)); // b = playerConnection, e = REMOVE_PLAYER
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            EntityPlayer entityPlayer1 = ((CraftPlayer) player).getHandle();
+            if (entityPlayer1 != entityPlayer && player.getWorld() == this.player.getWorld() && player.canSee(this.player)) {
+                entityPlayer1.b.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer)); // b = playerConnection, e = REMOVE_PLAYER
             }
         }
         TARDISDisguiseTracker.ProfileData map = TARDISDisguiseTracker.ARCHED.get(player.getUniqueId());
@@ -100,10 +100,10 @@ public class TARDISChameleonArchDisguiser {
             nameField.set(arch, oldName);
             nameField.setAccessible(false);
             arch.getProperties().putAll(properties);
-            Field gpField = EntityHuman.class.getDeclaredField("cs"); // cs = GameProfile
-            gpField.setAccessible(true);
-            gpField.set(entityPlayer, arch);
-            gpField.setAccessible(false);
+            Field gameProfileField = EntityHuman.class.getDeclaredField("cs"); // cs = GameProfile
+            gameProfileField.setAccessible(true);
+            gameProfileField.set(entityPlayer, arch);
+            gameProfileField.setAccessible(false);
             arch.getProperties().put("textures", new Property("textures", archSkin, archSignature));
         } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
             TARDISDisguiseTracker.ARCHED.remove(player.getUniqueId());
@@ -112,12 +112,12 @@ public class TARDISChameleonArchDisguiser {
         PacketPlayOutPlayerInfo packetPlayOutPlayerInfo = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, entityPlayer); // a = ADD_PLAYER
         PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(player.getEntityId());
         PacketPlayOutNamedEntitySpawn packetPlayOutNamedEntitySpawn = new PacketPlayOutNamedEntitySpawn(entityPlayer);
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            EntityPlayer ep = ((CraftPlayer) p).getHandle();
-            if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.b.sendPacket(packetPlayOutPlayerInfo);
-                ep.b.sendPacket(packetPlayOutEntityDestroy);
-                ep.b.sendPacket(packetPlayOutNamedEntitySpawn); // b = playerConnection
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            EntityPlayer entityPlayer1 = ((CraftPlayer) player).getHandle();
+            if (entityPlayer1 != entityPlayer && player.getWorld() == this.player.getWorld() && player.canSee(this.player)) {
+                entityPlayer1.b.sendPacket(packetPlayOutPlayerInfo);
+                entityPlayer1.b.sendPacket(packetPlayOutEntityDestroy);
+                entityPlayer1.b.sendPacket(packetPlayOutNamedEntitySpawn); // b = playerConnection
             }
         }
         TARDISDisguiseTracker.ARCHED.remove(player.getUniqueId());

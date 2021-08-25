@@ -33,15 +33,15 @@ public class UpdateChunkEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancel;
-    private ChunkInfo cCoord;
+    private ChunkInfo chunkCoord;
     private LightType lightType;
 
-    public UpdateChunkEvent(ChunkInfo cCoord) {
-        this(cCoord, LightType.BLOCK);
+    public UpdateChunkEvent(ChunkInfo chunkCoord) {
+        this(chunkCoord, LightType.BLOCK);
     }
 
-    public UpdateChunkEvent(ChunkInfo cCoord, LightType lightType) {
-        this.cCoord = cCoord;
+    public UpdateChunkEvent(ChunkInfo chunkCoord, LightType lightType) {
+        this.chunkCoord = chunkCoord;
         this.lightType = lightType;
     }
 
@@ -60,16 +60,16 @@ public class UpdateChunkEvent extends Event implements Cancellable {
     }
 
     @Override
-    public void setCancelled(boolean arg0) {
-        cancel = arg0;
+    public void setCancelled(boolean cancel) {
+        this.cancel = cancel;
     }
 
     public ChunkInfo getChunkInfo() {
-        return cCoord;
+        return chunkCoord;
     }
 
-    public void setChunkInfo(ChunkInfo cCoord) {
-        this.cCoord = cCoord;
+    public void setChunkInfo(ChunkInfo chunkCoord) {
+        this.chunkCoord = chunkCoord;
     }
 
     public LightType getLightType() {

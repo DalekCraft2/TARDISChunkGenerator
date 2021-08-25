@@ -65,8 +65,8 @@ public abstract class NmsHandlerBase implements INMSHandler {
                                     if (isValidSectionY(world, sectionY)) {
                                         int chunkX = blockX >> 4;
                                         int chunkZ = blockZ >> 4;
-                                        ChunkInfo cCoord = new ChunkInfo(world, chunkX + dx, sectionY << 4, chunkZ + dz, players != null ? players : (players = world.getPlayers()));
-                                        list.add(cCoord);
+                                        ChunkInfo chunkCoord = new ChunkInfo(world, chunkX + dx, sectionY << 4, chunkZ + dz, players != null ? players : (players = world.getPlayers()));
+                                        list.add(chunkCoord);
                                     }
                                 }
                             }
@@ -130,5 +130,5 @@ public abstract class NmsHandlerBase implements INMSHandler {
         return (((x ^ ((-dx >> 4) & 15)) + 1) & (-(dx & 1)));
     }
 
-    protected abstract void recalculateLighting(World world, int x, int y, int z, LightType lightType);
+    protected abstract void recalculateLighting(World world, int blockX, int blockY, int blockZ, LightType lightType);
 }

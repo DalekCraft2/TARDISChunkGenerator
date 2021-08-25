@@ -37,11 +37,11 @@ public class BiomeUtilities {
 
     public static String getLevelName() {
         try {
-            BufferedReader is = new BufferedReader(new FileReader("server.properties"));
-            Properties props = new Properties();
-            props.load(is);
-            is.close();
-            return props.getProperty("level-name");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("server.properties"));
+            Properties properties = new Properties();
+            properties.load(bufferedReader);
+            bufferedReader.close();
+            return properties.getProperty("level-name");
         } catch (IOException e) {
             return "world"; // minecraft / spigot default
         }
@@ -132,9 +132,9 @@ public class BiomeUtilities {
         return "minecraft:ocean";
     }
 
-    public static String getBiomeKey(Chunk c) {
-        net.minecraft.world.level.chunk.Chunk chunk = ((CraftChunk) c).getHandle();
-        BiomeStorage biomeStorage = chunk.getBiomeIndex();
+    public static String getBiomeKey(Chunk chunk) {
+        net.minecraft.world.level.chunk.Chunk nmsChunk = ((CraftChunk) chunk).getHandle();
+        BiomeStorage biomeStorage = nmsChunk.getBiomeIndex();
         if (biomeStorage != null) {
             BiomeBase base = biomeStorage.getBiome(8, 64, 8);
             BiomeFog fog = base.l();

@@ -43,30 +43,30 @@ public class TARDISPacketListener {
         ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
 
             @Override
-            public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
-                super.channelRead(channelHandlerContext, packet);
+            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                super.channelRead(ctx, msg);
             }
 
             @Override
-            public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise channelPromise) throws Exception {
-                if (packet instanceof PacketPlayOutNamedEntitySpawn namedEntitySpawn) {
+            public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+                if (msg instanceof PacketPlayOutNamedEntitySpawn namedEntitySpawn) {
                     try {
-                        Field f = namedEntitySpawn.getClass().getDeclaredField("b"); // NoSuchFieldException, b = UUID
-                        f.setAccessible(true);
-                        UUID uuid = (UUID) f.get(namedEntitySpawn);
+                        Field field = namedEntitySpawn.getClass().getDeclaredField("b"); // NoSuchFieldException, b = UUID
+                        field.setAccessible(true);
+                        UUID uuid = (UUID) field.get(namedEntitySpawn);
                         if (TARDISDisguiseTracker.DISGUISED_AS_MOB.containsKey(uuid)) {
                             Entity entity = Bukkit.getEntity(uuid);
                             if (entity.getType().equals(EntityType.PLAYER)) {
                                 Player player = (Player) entity;
                                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISHelper.plugin, () -> TARDISDisguiser.redisguise(player, entity.getWorld()), 5L);
                             }
-                            f.setAccessible(false);
+                            field.setAccessible(false);
                         }
                     } catch (NoSuchFieldException | IllegalAccessException e) {
                         TARDISHelper.plugin.getLogger().log(Level.SEVERE, "Could not get UUID from PacketPlayOutNamedEntitySpawn: " + e.getMessage());
                     }
                 }
-                super.write(channelHandlerContext, packet, channelPromise);
+                super.write(ctx, msg, promise);
             }
         };
 

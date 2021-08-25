@@ -37,8 +37,8 @@ public class Light {
     private static final Object LOCK = new Object();
     private static final NMSHandler NMS_HANDLER = new NMSHandler();
 
-    public static boolean createLight(World world, int x, int y, int z, LightType lightType, int lightlevel, boolean async) {
-        CreateLightEvent event = new CreateLightEvent(world, x, y, z, lightType, lightlevel, async);
+    public static boolean createLight(World world, int x, int y, int z, LightType lightType, int lightLevel, boolean async) {
+        CreateLightEvent event = new CreateLightEvent(world, x, y, z, lightType, lightLevel, async);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             Runnable request = () -> {

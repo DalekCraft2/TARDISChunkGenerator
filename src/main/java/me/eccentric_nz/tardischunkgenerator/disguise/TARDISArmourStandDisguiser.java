@@ -36,13 +36,13 @@ import java.util.UUID;
 
 public class TARDISArmourStandDisguiser {
 
-    private final ArmorStand stand;
+    private final ArmorStand armorStand;
     private final Object[] options;
     private final EntityType entityType;
     private Entity entity;
 
-    public TARDISArmourStandDisguiser(ArmorStand stand, EntityType entityType, Object[] options) {
-        this.stand = stand;
+    public TARDISArmourStandDisguiser(ArmorStand armorStand, EntityType entityType, Object[] options) {
+        this.armorStand = armorStand;
         this.entityType = entityType;
         this.options = options;
         createDisguise();
@@ -50,13 +50,13 @@ public class TARDISArmourStandDisguiser {
 
     public static void disguiseToPlayer(Player to, org.bukkit.World world) {
         for (Map.Entry<UUID, TARDISDisguise> map : TARDISDisguiseTracker.DISGUISED_ARMOR_STANDS.entrySet()) {
-            ArmorStand stand = (ArmorStand) Bukkit.getEntity(map.getKey());
-            if (stand != null && stand.getWorld() == world) {
+            ArmorStand armorStand = (ArmorStand) Bukkit.getEntity(map.getKey());
+            if (armorStand != null && armorStand.getWorld() == world) {
                 Entity mob = TARDISDisguise.createMobDisguise(map.getValue(), world);
                 if (mob != null) {
                     // set location
-                    setEntityLocationIdAndName(mob, stand.getLocation(), stand);
-                    PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(stand.getEntityId());
+                    setEntityLocationIdAndName(mob, armorStand.getLocation(), armorStand);
+                    PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(armorStand.getEntityId());
                     PacketPlayOutSpawnEntityLiving packetPlayOutSpawnEntityLiving = new PacketPlayOutSpawnEntityLiving((EntityLiving) mob);
                     PacketPlayOutEntityMetadata packetPlayOutEntityMetadata = new PacketPlayOutEntityMetadata(mob.getId(), mob.getDataWatcher(), false);
                     PacketPlayOutEntity.PacketPlayOutEntityLook packetPlayOutEntityLook = new PacketPlayOutEntity.PacketPlayOutEntityLook(mob.getId(), (byte) mob.getYRot(), (byte) mob.getXRot(), true);
@@ -70,20 +70,20 @@ public class TARDISArmourStandDisguiser {
         }
     }
 
-    public static void redisguise(ArmorStand stand, org.bukkit.World world) {
-        TARDISDisguise disguise = TARDISDisguiseTracker.DISGUISED_AS_MOB.get(stand.getUniqueId());
+    public static void redisguise(ArmorStand armorStand, org.bukkit.World world) {
+        TARDISDisguise disguise = TARDISDisguiseTracker.DISGUISED_AS_MOB.get(armorStand.getUniqueId());
         Entity mob = TARDISDisguise.createMobDisguise(disguise, world);
         if (mob != null) {
             // set location
-            setEntityLocationIdAndName(mob, stand.getLocation(), stand);
-            TARDISDisguiseTracker.DISGUISED_AS_MOB.put(stand.getUniqueId(), new TARDISDisguise(disguise.getEntityType(), disguise.getOptions()));
-            PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(stand.getEntityId());
+            setEntityLocationIdAndName(mob, armorStand.getLocation(), armorStand);
+            TARDISDisguiseTracker.DISGUISED_AS_MOB.put(armorStand.getUniqueId(), new TARDISDisguise(disguise.getEntityType(), disguise.getOptions()));
+            PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(armorStand.getEntityId());
             PacketPlayOutSpawnEntityLiving packetPlayOutSpawnEntityLiving = new PacketPlayOutSpawnEntityLiving((EntityLiving) mob);
             PacketPlayOutEntityMetadata packetPlayOutEntityMetadata = new PacketPlayOutEntityMetadata(mob.getId(), mob.getDataWatcher(), false);
             PacketPlayOutEntity.PacketPlayOutEntityLook packetPlayOutEntityLook = new PacketPlayOutEntity.PacketPlayOutEntityLook(mob.getId(), (byte) mob.getYRot(), (byte) mob.getXRot(), true);
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (stand.getWorld() == p.getWorld()) {
-                    PlayerConnection connection = ((CraftPlayer) p).getHandle().b; // b = playerConnection
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (armorStand.getWorld() == player.getWorld()) {
+                    PlayerConnection connection = ((CraftPlayer) player).getHandle().b; // b = playerConnection
                     connection.sendPacket(packetPlayOutEntityDestroy);
                     connection.sendPacket(packetPlayOutSpawnEntityLiving);
                     connection.sendPacket(packetPlayOutEntityMetadata);
@@ -93,9 +93,9 @@ public class TARDISArmourStandDisguiser {
         }
     }
 
-    private static void setEntityLocationIdAndName(Entity entity, Location location, ArmorStand stand) {
+    private static void setEntityLocationIdAndName(Entity entity, Location location, ArmorStand armorStand) {
         entity.setPosition(location.getX(), location.getY(), location.getZ());
-        entity.e(stand.getEntityId());
+        entity.e(armorStand.getEntityId());
         float fixed = fixYaw(location.getYaw());
         entity.setHeadRotation(fixed);
         entity.h(fixed);
@@ -112,33 +112,33 @@ public class TARDISArmourStandDisguiser {
     public static void removeDisguise(ArmorStand stand) {
         TARDISDisguiseTracker.DISGUISED_ARMOR_STANDS.remove(stand.getUniqueId());
         PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(stand.getEntityId());
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (stand.getWorld() == p.getWorld()) {
-                ((CraftPlayer) p).getHandle().b.sendPacket(packetPlayOutEntityDestroy); // b = playerConnection
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (stand.getWorld() == player.getWorld()) {
+                ((CraftPlayer) player).getHandle().b.sendPacket(packetPlayOutEntityDestroy); // b = playerConnection
             }
         }
     }
 
     private void createDisguise() {
         if (entityType != null) {
-            Location location = stand.getLocation();
+            Location location = armorStand.getLocation();
             TARDISDisguise disguise = new TARDISDisguise(entityType, options);
             entity = TARDISDisguise.createMobDisguise(disguise, location.getWorld());
             if (entity != null) {
-                setEntityLocationIdAndName(entity, location, stand);
+                setEntityLocationIdAndName(entity, location, armorStand);
             }
         }
     }
 
     public void disguiseToAll() {
-        TARDISDisguiseTracker.DISGUISED_AS_MOB.put(stand.getUniqueId(), new TARDISDisguise(entityType, options));
-        PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(stand.getEntityId());
+        TARDISDisguiseTracker.DISGUISED_AS_MOB.put(armorStand.getUniqueId(), new TARDISDisguise(entityType, options));
+        PacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new PacketPlayOutEntityDestroy(armorStand.getEntityId());
         PacketPlayOutSpawnEntityLiving packetPlayOutSpawnEntityLiving = new PacketPlayOutSpawnEntityLiving((EntityLiving) entity);
         PacketPlayOutEntityMetadata packetPlayOutEntityMetadata = new PacketPlayOutEntityMetadata(entity.getId(), entity.getDataWatcher(), false);
         PacketPlayOutEntity.PacketPlayOutEntityLook packetPlayOutEntityLook = new PacketPlayOutEntity.PacketPlayOutEntityLook(entity.getId(), (byte) entity.getYRot(), (byte) entity.getXRot(), true);
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (stand.getWorld() == p.getWorld()) {
-                PlayerConnection connection = ((CraftPlayer) p).getHandle().b; // b = playerConnection
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (armorStand.getWorld() == player.getWorld()) {
+                PlayerConnection connection = ((CraftPlayer) player).getHandle().b; // b = playerConnection
                 connection.sendPacket(packetPlayOutEntityDestroy);
                 connection.sendPacket(packetPlayOutSpawnEntityLiving);
                 connection.sendPacket(packetPlayOutEntityMetadata);

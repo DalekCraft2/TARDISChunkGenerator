@@ -20,10 +20,10 @@ public class PlayerInputEvent extends PlayerEvent {
 
     public static HandlerList handlerList = new HandlerList();
 
-    public PlayerInputEvent(PacketPlayInUpdateSign packet, Player p) {
-        super(p);
+    public PlayerInputEvent(PacketPlayInUpdateSign packet, Player player) {
+        super(player);
         // This is where your code goes
-        updateSign(p, packet);
+        updateSign(player, packet);
     }
 
     @Override
@@ -31,25 +31,25 @@ public class PlayerInputEvent extends PlayerEvent {
         return handlerList;
     }
 
-    public void updateSign(Player p, PacketPlayInUpdateSign packet) {
-        EntityPlayer player = ((CraftPlayer) p.getPlayer()).getHandle();
-        player.resetIdleTimer();
-        WorldServer worldserver = player.getWorldServer();
-        BlockPosition blockposition = packet.b();
-        if (worldserver.isLoaded(blockposition)) {
-            IBlockData iblockdata = worldserver.getType(blockposition);
-            TileEntity tileentity = worldserver.getTileEntity(blockposition);
-            if (!(tileentity instanceof TileEntitySign tileentitysign)) {
+    public void updateSign(Player player, PacketPlayInUpdateSign packet) {
+        EntityPlayer entityPlayer = ((CraftPlayer) player.getPlayer()).getHandle();
+        entityPlayer.resetIdleTimer();
+        WorldServer worldServer = entityPlayer.getWorldServer();
+        BlockPosition blockPosition = packet.b();
+        if (worldServer.isLoaded(blockPosition)) {
+            IBlockData iBlockData = worldServer.getType(blockPosition);
+            TileEntity tileEntity = worldServer.getTileEntity(blockPosition);
+            if (!(tileEntity instanceof TileEntitySign tileEntitySign)) {
                 return;
             }
-            tileentitysign.f = true; // f = isEditable
+            tileEntitySign.f = true; // f = isEditable
             String[] lines = packet.c();
             for (int i = 0; i < lines.length; ++i) {
-                tileentitysign.a(i, new ChatComponentText(lines[i]));
+                tileEntitySign.a(i, new ChatComponentText(lines[i]));
             }
-            tileentitysign.update();
-            worldserver.notify(blockposition, iblockdata, iblockdata, 3);
-            SignChangeEvent event = new SignChangeEvent(p.getWorld().getBlockAt(blockposition.getX(), blockposition.getY(), blockposition.getZ()), p, lines);
+            tileEntitySign.update();
+            worldServer.notify(blockPosition, iBlockData, iBlockData, 3);
+            SignChangeEvent event = new SignChangeEvent(player.getWorld().getBlockAt(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ()), player, lines);
             Bukkit.getPluginManager().callEvent(event);
         }
     }

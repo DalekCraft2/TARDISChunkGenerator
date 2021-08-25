@@ -214,6 +214,7 @@ public class TARDISDisguise {
                     }
                     if (o instanceof Horse.Color && disguise.getEntityType().equals(EntityType.HORSE)) {
                         EntityHorse horse = (EntityHorse) entity;
+                        // TODO Fix ClassCastException.
                         horse.setVariant(((HorseColor) o), HorseStyle.values()[new Random().nextInt(HorseStyle.values().length)]);
                     }
                     if (o instanceof Llama.Color && disguise.getEntityType().equals(EntityType.LLAMA)) {

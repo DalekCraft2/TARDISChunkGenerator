@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@ package me.eccentric_nz.tardischunkgenerator;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -33,25 +33,50 @@ public class TARDISChunkGenerator extends ChunkGenerator {
     /**
      * Generates an empty world!
      *
-     * @param world  the world to generate chunks in
-     * @param random a pseudorandom number generator
-     * @param x     the chunk's x coordinate
-     * @param z     the chunk's z coordinate
-     * @return the ChunkData to be generated
+     * @param worldInfo the world to generate chunks in
+     * @param random    a pseudorandom number generator
+     * @param x         the chunk's x coordinate
+     * @param z         the chunk's z coordinate
+     * @param chunkData the ChunkData being generated
      */
     @Override
-    public @NotNull ChunkData generateChunkData(@NotNull World world, @NotNull Random random, int x, int z, @NotNull BiomeGrid biome) {
+    public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random random, int x, int z, ChunkData chunkData) {
+        chunkData.setRegion(0, 0, 0, 16, chunkData.getMaxHeight(), 16, Material.VOID_AIR);
+    }
 
-        ChunkData result = createChunkData(world);
-        result.setRegion(0, 0, 0, 16, world.getMaxHeight(), 16, Material.VOID_AIR);
-        for (int xx = 0; xx < 16; xx++) {
-            for (int zz = 0; zz < 16; zz++) {
-                for (int yy = 0; yy < world.getMaxHeight(); yy++) {
-                    biome.setBiome(xx, yy, zz, Biome.THE_VOID);
-                }
-            }
-        }
-        return result;
+    @Override
+    public boolean shouldGenerateNoise() {
+        return true;
+    }
+
+    @Override
+    public boolean shouldGenerateSurface() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldGenerateBedrock() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldGenerateCaves() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldGenerateDecorations() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldGenerateMobs() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldGenerateStructures() {
+        return false;
     }
 
     /**

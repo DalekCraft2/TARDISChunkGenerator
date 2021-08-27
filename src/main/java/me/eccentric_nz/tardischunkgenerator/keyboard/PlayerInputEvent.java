@@ -39,18 +39,17 @@ public class PlayerInputEvent extends PlayerEvent {
         if (worldServer.isLoaded(blockPosition)) {
             IBlockData iBlockData = worldServer.getType(blockPosition);
             TileEntity tileEntity = worldServer.getTileEntity(blockPosition);
-            if (!(tileEntity instanceof TileEntitySign tileEntitySign)) {
-                return;
+            if (tileEntity instanceof TileEntitySign tileEntitySign) {
+                tileEntitySign.f = true; // f = isEditable
+                String[] lines = packet.c();
+                for (int i = 0; i < lines.length; ++i) {
+                    tileEntitySign.a(i, new ChatComponentText(lines[i]));
+                }
+                tileEntitySign.update();
+                worldServer.notify(blockPosition, iBlockData, iBlockData, 3);
+                SignChangeEvent event = new SignChangeEvent(player.getWorld().getBlockAt(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ()), player, lines);
+                Bukkit.getPluginManager().callEvent(event);
             }
-            tileEntitySign.f = true; // f = isEditable
-            String[] lines = packet.c();
-            for (int i = 0; i < lines.length; ++i) {
-                tileEntitySign.a(i, new ChatComponentText(lines[i]));
-            }
-            tileEntitySign.update();
-            worldServer.notify(blockPosition, iBlockData, iBlockData, 3);
-            SignChangeEvent event = new SignChangeEvent(player.getWorld().getBlockAt(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ()), player, lines);
-            Bukkit.getPluginManager().callEvent(event);
         }
     }
 }

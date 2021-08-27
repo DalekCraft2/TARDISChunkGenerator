@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.BiomeProvider;
 import org.bukkit.map.MapView;
 
 import java.util.UUID;
@@ -41,6 +42,13 @@ public interface TARDISHelperAPI {
      * @return the formatted TARDIS plugin name
      */
     String getMessagePrefix();
+
+    /**
+     * Gets the TARDISChunkGenerator Biome Provider
+     *
+     * @return the TARDISVoidBiomeProvider
+     */
+    BiomeProvider getBiomeProvider();
 
     /**
      * Names a furnace GUI
@@ -96,8 +104,8 @@ public interface TARDISHelperAPI {
     /**
      * Sets the GameType value for a world.
      *
-     * @param world the world to set the GameMode for
-     * @param gameMode    the GameMode to set the world to
+     * @param world    the world to set the GameMode for
+     * @param gameMode the GameMode to set the world to
      */
     void setWorldGameMode(String world, GameMode gameMode);
 
@@ -174,7 +182,7 @@ public interface TARDISHelperAPI {
     /**
      * Disguises an armour stand as another entity.
      *
-     * @param armorStand      the armour stand to disguise
+     * @param armorStand the armour stand to disguise
      * @param entityType the entity type to disguise as
      * @param options    an array of entity options
      */

@@ -34,12 +34,11 @@ public class SignInputHandler {
                 channel.pipeline().addAfter("decoder", "update_sign", new MessageToMessageDecoder<Packet>() {
 
                     @Override
-                    protected void decode(ChannelHandlerContext channelHandlerContext, Packet packet, List<Object> out) {
+                    protected void decode(ChannelHandlerContext channelHandlerContext, Packet packet, List<Object> list) {
                         if (packet instanceof PacketPlayInUpdateSign usePacket) {
-
                             Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(new PlayerInputEvent(usePacket, player)));
                         }
-                        out.add(packet);
+                        list.add(packet);
                     }
                 });
             }

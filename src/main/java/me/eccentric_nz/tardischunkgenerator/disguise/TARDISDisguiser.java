@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
+import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.network.chat.ChatMessage;
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.network.protocol.game.PacketPlayOutEntityMetadata;
@@ -34,23 +35,27 @@ import org.bukkit.entity.Player;
 public class TARDISDisguiser {
 
     private static final boolean NAME_VISIBLE = false;
+    private final TARDISHelper plugin;
     private final Player player;
     private Object[] options;
     private EntityType entityType;
     private Entity entity;
 
-    public TARDISDisguiser(Player player) {
+    public TARDISDisguiser(TARDISHelper plugin, Player player) {
+        this.plugin = plugin;
         this.player = player;
     }
 
-    public TARDISDisguiser(EntityType entityType, Player player) {
+    public TARDISDisguiser(TARDISHelper plugin, EntityType entityType, Player player) {
+        this.plugin = plugin;
         this.entityType = entityType;
         this.player = player;
         options = null;
         createDisguise();
     }
 
-    public TARDISDisguiser(EntityType entityType, Player player, Object[] options) {
+    public TARDISDisguiser(TARDISHelper plugin, EntityType entityType, Player player, Object[] options) {
+        this.plugin = plugin;
         this.entityType = entityType;
         this.player = player;
         this.options = options;
@@ -133,7 +138,7 @@ public class TARDISDisguiser {
 
     public void removeDisguise() {
         if (TARDISDisguiseTracker.DISGUISED_AS_PLAYER.contains(player.getUniqueId())) {
-            new TARDISPlayerDisguiser(player, player.getUniqueId()).disguiseToAll();
+            new TARDISPlayerDisguiser(plugin, player, player.getUniqueId()).disguiseToAll();
             TARDISDisguiseTracker.DISGUISED_AS_PLAYER.remove(player.getUniqueId());
         } else {
             TARDISDisguiseTracker.DISGUISED_AS_MOB.remove(player.getUniqueId());

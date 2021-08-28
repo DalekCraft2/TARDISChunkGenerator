@@ -104,7 +104,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
         MACHINE.start(2, 400);
         String basePath = getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
         // Add custom biomes
-        BiomeUtilities.addBiomes(basePath, messagePrefix);
+        BiomeUtilities.addBiomes(basePath);
         // get the TARDIS config
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(new File(basePath + "config.yml"));
         // should we filter the log?
@@ -314,32 +314,32 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
 
     @Override
     public void disguise(EntityType entityType, Player player) {
-        new TARDISDisguiser(entityType, player).disguiseToAll();
+        new TARDISDisguiser(plugin, entityType, player).disguiseToAll();
     }
 
     @Override
     public void disguise(EntityType entityType, Player player, Object[] options) {
-        new TARDISDisguiser(entityType, player, options).disguiseToAll();
+        new TARDISDisguiser(plugin, entityType, player, options).disguiseToAll();
     }
 
     @Override
     public void disguise(Player player, String name) {
-        new TARDISChameleonArchDisguiser(player).changeSkin(name);
+        new TARDISChameleonArchDisguiser(plugin, player).changeSkin(name);
     }
 
     @Override
     public void disguise(Player player, UUID uuid) {
-        new TARDISPlayerDisguiser(player, uuid).disguiseToAll();
+        new TARDISPlayerDisguiser(plugin, player, uuid).disguiseToAll();
     }
 
     @Override
     public void undisguise(Player player) {
-        new TARDISDisguiser(player).removeDisguise();
+        new TARDISDisguiser(plugin, player).removeDisguise();
     }
 
     @Override
     public void reset(Player player) {
-        new TARDISChameleonArchDisguiser(player).resetSkin();
+        new TARDISChameleonArchDisguiser(plugin, player).resetSkin();
     }
 
     @Override
@@ -354,7 +354,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
 
     @Override
     public void disguiseArmourStand(ArmorStand armorStand, EntityType entityType, Object[] options) {
-        new TARDISArmourStandDisguiser(armorStand, entityType, options).disguiseToAll();
+        new TARDISArmourStandDisguiser(plugin, armorStand, entityType, options).disguiseToAll();
     }
 
     @Override

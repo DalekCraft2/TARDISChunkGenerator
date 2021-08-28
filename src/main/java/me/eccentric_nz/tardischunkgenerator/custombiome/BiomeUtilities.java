@@ -47,7 +47,7 @@ public class BiomeUtilities {
         }
     }
 
-    public static void addBiomes(String basePath, String messagePrefix) {
+    public static void addBiomes(String basePath) {
         // get the TARDIS planets config
         String levelName = getLevelName();
         FileConfiguration planets = YamlConfiguration.loadConfiguration(new File(basePath + "planets.yml"));

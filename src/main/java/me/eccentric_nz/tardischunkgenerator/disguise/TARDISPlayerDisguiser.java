@@ -39,10 +39,12 @@ import java.util.logging.Level;
 
 public class TARDISPlayerDisguiser {
 
+    private final TARDISHelper plugin;
     private final Player player;
     private final UUID uuid;
 
-    public TARDISPlayerDisguiser(Player player, UUID uuid) {
+    public TARDISPlayerDisguiser(TARDISHelper plugin, Player player, UUID uuid) {
+        this.plugin = plugin;
         this.player = player;
         this.uuid = uuid;
         disguisePlayer();
@@ -77,7 +79,7 @@ public class TARDISPlayerDisguiser {
                 profile.getProperties().removeAll("textures");
                 return profile.getProperties().put("textures", new Property("textures", skin, signature));
             } else {
-                TARDISHelper.plugin.getLogger().log(Level.INFO, "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
+                plugin.getLogger().log(Level.INFO, "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
                 return false;
             }
         } catch (IOException e) {
@@ -90,8 +92,8 @@ public class TARDISPlayerDisguiser {
         TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player != this.player && this.player.getWorld() == player.getWorld()) {
-                player.hidePlayer(this.player);
-                player.showPlayer(this.player);
+                player.hidePlayer(plugin, this.player);
+                player.showPlayer(plugin, this.player);
             }
         }
     }

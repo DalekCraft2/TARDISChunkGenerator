@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
+import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.network.protocol.game.PacketPlayOutEntity;
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.network.protocol.game.PacketPlayOutEntityMetadata;
@@ -36,12 +37,14 @@ import java.util.UUID;
 
 public class TARDISArmourStandDisguiser {
 
+    private final TARDISHelper plugin;
     private final ArmorStand armorStand;
     private final Object[] options;
     private final EntityType entityType;
     private Entity entity;
 
-    public TARDISArmourStandDisguiser(ArmorStand armorStand, EntityType entityType, Object[] options) {
+    public TARDISArmourStandDisguiser(TARDISHelper plugin, ArmorStand armorStand, EntityType entityType, Object[] options) {
+        this.plugin = plugin;
         this.armorStand = armorStand;
         this.entityType = entityType;
         this.options = options;

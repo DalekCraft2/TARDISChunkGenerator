@@ -27,7 +27,8 @@ public class PlayerInputEvent extends PlayerEvent {
     }
 
     @Override
-    public @NotNull HandlerList getHandlers() {
+    @NotNull
+    public HandlerList getHandlers() {
         return handlerList;
     }
 

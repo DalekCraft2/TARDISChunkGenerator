@@ -11,11 +11,13 @@ import java.util.List;
 public class TARDISVoidBiomeProvider extends BiomeProvider {
 
     @Override
+    @NotNull
     public Biome getBiome(@NotNull WorldInfo worldInfo, int x, int y, int z) {
         return Biome.THE_VOID;
     }
 
     @Override
+    @NotNull
     public List<Biome> getBiomes(@NotNull WorldInfo worldInfo) {
         return Lists.newArrayList(Biome.THE_VOID);
     }

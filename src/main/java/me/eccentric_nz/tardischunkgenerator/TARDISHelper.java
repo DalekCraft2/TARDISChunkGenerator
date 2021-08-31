@@ -314,32 +314,32 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
 
     @Override
     public void disguise(EntityType entityType, Player player) {
-        new TARDISDisguiser(plugin, entityType, player).disguiseToAll();
+        new TARDISDisguiser(this, entityType, player).disguiseToAll();
     }
 
     @Override
     public void disguise(EntityType entityType, Player player, Object[] options) {
-        new TARDISDisguiser(plugin, entityType, player, options).disguiseToAll();
+        new TARDISDisguiser(this, entityType, player, options).disguiseToAll();
     }
 
     @Override
     public void disguise(Player player, String name) {
-        new TARDISChameleonArchDisguiser(plugin, player).changeSkin(name);
+        new TARDISChameleonArchDisguiser(this, player).changeSkin(name);
     }
 
     @Override
     public void disguise(Player player, UUID uuid) {
-        new TARDISPlayerDisguiser(plugin, player, uuid).disguiseToAll();
+        new TARDISPlayerDisguiser(this, player, uuid).disguiseToAll();
     }
 
     @Override
     public void undisguise(Player player) {
-        new TARDISDisguiser(plugin, player).removeDisguise();
+        new TARDISDisguiser(this, player).removeDisguise();
     }
 
     @Override
     public void reset(Player player) {
-        new TARDISChameleonArchDisguiser(plugin, player).resetSkin();
+        new TARDISChameleonArchDisguiser(this, player).resetSkin();
     }
 
     @Override
@@ -354,7 +354,7 @@ public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
 
     @Override
     public void disguiseArmourStand(ArmorStand armorStand, EntityType entityType, Object[] options) {
-        new TARDISArmourStandDisguiser(plugin, armorStand, entityType, options).disguiseToAll();
+        new TARDISArmourStandDisguiser(this, armorStand, entityType, options).disguiseToAll();
     }
 
     @Override

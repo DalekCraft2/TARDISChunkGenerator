@@ -44,6 +44,9 @@ public enum PROFESSION {
     }
 
     public static PROFESSION getFromVillagerProfession(Villager.Profession profession) {
+        if (profession == null) {
+            return PROFESSION.NONE;
+        }
         return PROFESSION.valueOf(profession.toString());
     }
 
